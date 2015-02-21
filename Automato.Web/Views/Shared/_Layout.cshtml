@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/foundation/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/foundation/foundation.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="nav-bar right">
+                <ul class="button-group">
+                    <li><a href="#" class="button">Link 1</a></li>
+                    <li><a href="#" class="button">Link 2</a></li>
+                    <li><a href="#" class="button">Link 3</a></li>
+                    <li><a href="#" class="button">Link 4</a></li>
+                </ul>
+            </div>
+            <h1>Automato <small>something.</small></h1>
+            <hr />
+        </div>
+    </div>
+
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/js/lib/react.js"></script>
+    <script src="~/js/lib/react-router.js"></script>
+    <script src="~/js/lib/react-radio-group.jsx"></script>
+    <script src="~/js/store/componentStore.js"></script>
+    <script src="~/js/components/lightSwitch.jsx"></script>
+    <script src="~/js/components/component.jsx"></script>
+    <script src="~/js/component_list/componentListItem.jsx"></script>
+    <script src="~/js/component_list/componentListSearch.jsx"></script>
+    <script src="~/js/component_list/componentList.jsx"></script>
+    <script src="~/js/addComponent.jsx"></script>
+    <script src="~/js/main.jsx"></script>
+    <script src="@Url.Content("~/js/app.jsx")"></script>
+</body>
+</html>
