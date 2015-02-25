@@ -4,7 +4,7 @@
     <Device>
       <Id>1</Id>
       <DeviceId>2</DeviceId>
-      <Name>Light Switch 1!!</Name>
+      <Name>Light Switch 1!</Name>
       <Type>LightSwitch</Type>
     </Device>
     <Device>

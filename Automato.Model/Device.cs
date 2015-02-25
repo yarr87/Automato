@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace Automato.Model
         /// <summary>
         /// Auto-gen id
         /// </summary>
-        public int Id { get; set; }
+        public Int64 Id { get; set; }
 
         /// <summary>
         /// Protocol-specific id (ie, zwave node id)
@@ -19,7 +20,10 @@ namespace Automato.Model
         public string DeviceId { get; set; }
 
         public string Name { get; set; }
+
+        [NotMapped]
         public string State { get; set; }
+        
         public DeviceType Type { get; set; }
 
         public void CopyFrom(Device component)

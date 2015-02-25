@@ -1,4 +1,5 @@
-﻿using Automato.Model;
+﻿using Automato.Data;
+using Automato.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,11 @@ namespace Automato.Logic
 
         public IEnumerable<Device> GetDevices()
         {
+            using (var db = new TomatoContext())
+            {
+                return db.Devices.ToList();
+            }
+
             var xml = XDocument.Load(_xmlPath);
 
             DeviceList devices = new DeviceList();
