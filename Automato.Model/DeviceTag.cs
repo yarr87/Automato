@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace Automato.Model
 {
-    [Serializable]
-    [XmlRoot("DeviceList")]
-    public class DeviceList
+    public class DeviceTag
     {
-        public List<Device> Devices { get; set; }
+        public Int64 Id { get; set; }
+
+        public string Name { get; set; }
     }
 }

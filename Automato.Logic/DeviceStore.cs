@@ -19,21 +19,25 @@ namespace Automato.Logic
         {
             using (var db = new TomatoContext())
             {
-                return db.Devices.ToList();
+                var query = db.Devices.Include("Tags");
+                var sql = query.ToString();
+
+                return query.ToList();
+                return db.Devices.Include("Tags").ToList();
             }
 
-            var xml = XDocument.Load(_xmlPath);
+            //var xml = XDocument.Load(_xmlPath);
 
-            DeviceList devices = new DeviceList();
+            //DeviceList devices = new DeviceList();
 
-            XmlSerializer ser = new XmlSerializer(typeof(DeviceList));
+            //XmlSerializer ser = new XmlSerializer(typeof(DeviceList));
             
-            using (var reader = xml.CreateReader())
-            {
-                devices = (DeviceList)ser.Deserialize(reader);
-            }
+            //using (var reader = xml.CreateReader())
+            //{
+            //    devices = (DeviceList)ser.Deserialize(reader);
+            //}
 
-            return devices.Devices;
+            //return devices.Devices;
             //ser.Deserialize(xml.CreateReader());
 
             //return new List<Component>()
@@ -46,42 +50,51 @@ namespace Automato.Logic
 
         public Device GetDeviceById(int id)
         {
-            var components = GetDevices();
+            using (var db = new TomatoContext())
+            {
+                return db.Devices.FirstOrDefault(d => d.Id == id);
+            }
 
-            return components.FirstOrDefault(c => c.Id == id);
+            //var components = GetDevices();
+
+            //return components.FirstOrDefault(c => c.Id == id);
         }
 
         public void AddOrEditDevice(Device device)
         {
-            var devices = GetDevices() ?? new List<Device>();
-
-            var deviceList = new DeviceList();
-            deviceList.Devices = devices.ToList();
-
-            // Add
-            if (device.Id == 0)
+            using (var db = new TomatoContext())
             {
-                device.Id = (devices.Any() ? devices.Max(c => c.Id) + 1 : 1);
-
-                deviceList.Devices.Add(device);
-            }
-            // Edit
-            else
-            {
-                var existing = devices.FirstOrDefault(c => c.Id == device.Id);
-
-                if (existing != null)
+                if (device.Id == 0)
                 {
-                    existing.CopyFrom(device);
+                    db.Devices.Add(device);
                 }
+                else
+                {
+                    var existing = db.Devices.FirstOrDefault(d => d.Id == device.Id);
+
+                    if (existing != null)
+                    {
+                        existing.CopyFrom(device);
+                    }
+                }
+
+
+                db.SaveChanges();
             }
+        }
 
-            XmlSerializer ser = new XmlSerializer(typeof(DeviceList));
-
-            using (var stream = File.OpenWrite(_xmlPath)) 
+        public void DeleteById(int id)
+        {
+            using (var db = new TomatoContext())
             {
-                stream.SetLength(0);
-                ser.Serialize(stream, deviceList);
+                var device = db.Devices.FirstOrDefault(d => d.Id == id);
+
+                if (device != null)
+                {
+                    db.Devices.Remove(device);
+
+                    db.SaveChanges();
+                }
             }
         }
     }

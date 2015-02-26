@@ -21,10 +21,15 @@ namespace Automato.Model
 
         public string Name { get; set; }
 
+        public DeviceType Type { get; set; }
+
+        public List<DeviceTag> Tags { get; set; }
+
+        /// <summary>
+        /// Not in the database, loaded directly from device
+        /// </summary>
         [NotMapped]
         public string State { get; set; }
-        
-        public DeviceType Type { get; set; }
 
         public void CopyFrom(Device component)
         {

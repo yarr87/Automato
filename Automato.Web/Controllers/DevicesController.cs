@@ -38,5 +38,14 @@ namespace Automato.Web.Controllers
         {
             return Ok();
         }
+
+        [Route("api/devices/{id}")]
+        [HttpDelete]
+        public IHttpActionResult DeleteById(int id)
+        {
+            new DeviceStore().DeleteById(id);
+
+            return Ok();
+        }
     }
 }
