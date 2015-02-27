@@ -17,7 +17,7 @@ namespace Automato.Model
         /// <summary>
         /// Protocol-specific id (ie, zwave node id)
         /// </summary>
-        public string DeviceId { get; set; }
+        public string NodeId { get; set; }
 
         public string Name { get; set; }
 
@@ -33,7 +33,7 @@ namespace Automato.Model
 
         public void CopyFrom(Device component)
         {
-            this.DeviceId = component.DeviceId;
+            this.NodeId = component.NodeId;
             this.Name = component.Name;
             this.Type = component.Type;
         }

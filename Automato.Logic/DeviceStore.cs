@@ -19,11 +19,28 @@ namespace Automato.Logic
         {
             using (var db = new TomatoContext())
             {
-                var query = db.Devices.Include("Tags");
-                var sql = query.ToString();
+                //var devices = (from device in db.Devices
+                //               select device).ToList();
 
-                return query.ToList();
-                return db.Devices.Include("Tags").ToList();
+                var devices = db.Devices.Include("Tags").ToList();
+
+                //var t1 = (from tag in db.DeviceTags
+                //         join map in db.DeviceTagMaps on tag.Id equals map.DeviceTagId
+                //         select new
+                //         {
+                //             DeviceId = map.DeviceId,
+                //             Tag = tag
+                //         });
+
+                //var tags = t1.ToList();
+                
+                //// Combine devices and tags...not sure if there's a better way to do this
+                //devices.ForEach(device =>
+                //{
+                //    device.Tags = tags.Where(t => t.DeviceId == device.Id).Select(t => t.Tag).ToList();
+                //});
+
+                return devices;
             }
 
             //var xml = XDocument.Load(_xmlPath);

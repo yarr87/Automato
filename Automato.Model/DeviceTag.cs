@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Automato.Model
 {
@@ -11,5 +12,8 @@ namespace Automato.Model
         public Int64 Id { get; set; }
 
         public string Name { get; set; }
+
+        [IgnoreDataMember]
+        public List<Device> Devices { get; set; }
     }
 }
