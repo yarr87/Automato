@@ -11,7 +11,7 @@ namespace Automato.Web
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-            var cors = new EnableCorsAttribute("http://localhost:8000", "*", "*");
+            var cors = new EnableCorsAttribute("http://localhost:8000,http://192.168.0.2:8000", "*", "*");
             config.EnableCors(cors);
 
             // Web API routes

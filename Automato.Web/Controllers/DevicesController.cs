@@ -1,10 +1,12 @@
-﻿using Automato.Logic;
+﻿using Automato.Integration;
+using Automato.Logic;
 using Automato.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Automato.Web.Controllers
@@ -34,8 +36,10 @@ namespace Automato.Web.Controllers
 
         [Route("api/devices/{name}/{command}")]
         [HttpPost]
-        public IHttpActionResult SendCommand(string name, string command)
+        public async Task<IHttpActionResult> SendCommand(string name, string command)
         {
+            await new OpenHabRestService().SendCommand(name, command);
+
             return Ok();
         }
 

@@ -245,13 +245,16 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ReactConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\DevicesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -279,6 +282,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Automato.Integration\Automato.Integration.csproj">
+      <Project>{f2e632c9-57a1-441b-a783-584e6e68f63e}</Project>
+      <Name>Automato.Integration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Automato.Logic\Automato.Logic.csproj">
       <Project>{765e90b4-360f-4b75-809b-4ee5a80f9646}</Project>
       <Name>Automato.Logic</Name>

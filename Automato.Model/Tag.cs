@@ -7,13 +7,21 @@ using System.Runtime.Serialization;
 
 namespace Automato.Model
 {
-    public class DeviceTag
+    public class Tag
     {
         public Int64 Id { get; set; }
 
         public string Name { get; set; }
 
+        public int? ParentId { get; set; }
+
         [IgnoreDataMember]
         public List<Device> Devices { get; set; }
+
+        public void CopyFrom(Tag tag)
+        {
+            this.Name = tag.Name;
+            this.ParentId = tag.ParentId;
+        }
     }
 }

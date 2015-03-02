@@ -13,56 +13,31 @@ namespace Automato.Logic
 {
     public class DeviceStore
     {
-        private const string _xmlPath = @"c:\users\jeff\documents\visual studio 2013\Projects\Automato\Automato.Web\App_Data\devices.xml";
-
         public IEnumerable<Device> GetDevices()
         {
             using (var db = new TomatoContext())
             {
-                //var devices = (from device in db.Devices
-                //               select device).ToList();
+                var device1 = (from device in db.Devices
+                               let deviceTags = from map in db.DeviceTagMaps
+                                                join tag in db.Tags on map.TagId equals tag.Id
+                                                where map.DeviceId == device.Id
+                                                select tag
+                               select new
+                               {
+                                   device = device,
+                                   tags = deviceTags.ToList()
+                               });
+                var devices = device1.ToList();
 
-                var devices = db.Devices.Include("Tags").ToList();
+                var allDevices = devices.Select(d =>
+                {
+                    var device = d.device;
+                    device.Tags = d.tags;
+                    return device;
+                }).ToList();
 
-                //var t1 = (from tag in db.DeviceTags
-                //         join map in db.DeviceTagMaps on tag.Id equals map.DeviceTagId
-                //         select new
-                //         {
-                //             DeviceId = map.DeviceId,
-                //             Tag = tag
-                //         });
-
-                //var tags = t1.ToList();
-                
-                //// Combine devices and tags...not sure if there's a better way to do this
-                //devices.ForEach(device =>
-                //{
-                //    device.Tags = tags.Where(t => t.DeviceId == device.Id).Select(t => t.Tag).ToList();
-                //});
-
-                return devices;
+                return allDevices;
             }
-
-            //var xml = XDocument.Load(_xmlPath);
-
-            //DeviceList devices = new DeviceList();
-
-            //XmlSerializer ser = new XmlSerializer(typeof(DeviceList));
-            
-            //using (var reader = xml.CreateReader())
-            //{
-            //    devices = (DeviceList)ser.Deserialize(reader);
-            //}
-
-            //return devices.Devices;
-            //ser.Deserialize(xml.CreateReader());
-
-            //return new List<Component>()
-            //{
-            //    new Component() { Name = "Light 1", State = "OFF", Type = ComponentType.LightSwitch },
-            //    new Component() { Name = "Light 2", State = "OFF", Type = ComponentType.LightSwitch },
-            //    new Component() { Name = "Dimmer 1", State = "40", Type = ComponentType.Dimmer }
-            //};
         }
 
         public Device GetDeviceById(int id)
@@ -71,19 +46,37 @@ namespace Automato.Logic
             {
                 return db.Devices.FirstOrDefault(d => d.Id == id);
             }
-
-            //var components = GetDevices();
-
-            //return components.FirstOrDefault(c => c.Id == id);
         }
 
         public void AddOrEditDevice(Device device)
         {
             using (var db = new TomatoContext())
             {
+                // New device
                 if (device.Id == 0)
                 {
+                    // Need to save device without tags because it's not configured right to save them automatically
+                    var tags = device.Tags;
+                    device.Tags = null;
+
                     db.Devices.Add(device);
+                    db.SaveChanges();
+
+                    // Save these after the device so we know its id
+                    foreach (var tag in tags)
+                    {
+                        var map = new DeviceTagMap()
+                        {
+                            DeviceId = device.Id,
+                            TagId = tag.Id
+                        };
+
+                        db.DeviceTagMaps.Add(map);
+                    }
+
+                    device.Tags = tags;
+
+                    db.SaveChanges();
                 }
                 else
                 {
@@ -91,12 +84,41 @@ namespace Automato.Logic
 
                     if (existing != null)
                     {
+                        var maps = db.DeviceTagMaps.Where(m => m.DeviceId == existing.Id).ToList();
+
+                        // Remove maps that were deleted
+                        foreach (var map in maps)
+                        {
+                            if (!device.Tags.Any(t => t.Id == map.TagId))
+                            {
+                                db.DeviceTagMaps.Remove(map);
+                            }
+                        }
+
+                        // Add new maps
+                        foreach (var tag in device.Tags)
+                        {
+                            if (!maps.Any(m => m.TagId == tag.Id))
+                            {
+                                db.DeviceTagMaps.Add(new DeviceTagMap()
+                                {
+                                    TagId = tag.Id,
+                                    DeviceId = device.Id
+                                });
+                            }
+                        }
+
                         existing.CopyFrom(device);
+
+                        // Can't save with tags
+                        var tags = device.Tags;
+                        existing.Tags = null;
+
+                        db.SaveChanges();
+
+                        existing.Tags = tags;
                     }
                 }
-
-
-                db.SaveChanges();
             }
         }
 
