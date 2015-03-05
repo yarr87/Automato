@@ -50,6 +50,14 @@ namespace Automato.Logic
                 {
                     db.Tags.Remove(tag);
 
+                    // Delete maps for this tag
+                    var maps = db.DeviceTagMaps.Where(m => m.TagId == id).ToList();
+
+                    foreach (var map in maps)
+                    {
+                        db.DeviceTagMaps.Remove(map);
+                    }
+
                     db.SaveChanges();
                 }
             }

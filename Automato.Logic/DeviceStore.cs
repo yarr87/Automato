@@ -132,6 +132,14 @@ namespace Automato.Logic
                 {
                     db.Devices.Remove(device);
 
+                    // Delete maps for this device
+                    var maps = db.DeviceTagMaps.Where(m => m.DeviceId == id).ToList();
+
+                    foreach (var map in maps)
+                    {
+                        db.DeviceTagMaps.Remove(map);
+                    }
+
                     db.SaveChanges();
                 }
             }
