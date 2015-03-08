@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automato.Data", "Automato.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automato.Integration", "Automato.Integration\Automato.Integration.csproj", "{F2E632C9-57A1-441B-A783-584E6E68F63E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automato.Job", "Automato.Job\Automato.Job.csproj", "{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,16 @@ Global
 		{F2E632C9-57A1-441B-A783-584E6E68F63E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F2E632C9-57A1-441B-A783-584E6E68F63E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F2E632C9-57A1-441B-A783-584E6E68F63E}.Release|x86.ActiveCfg = Release|Any CPU
+		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
