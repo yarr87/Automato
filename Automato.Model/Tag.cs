@@ -13,7 +13,7 @@ namespace Automato.Model
 
         public string Name { get; set; }
 
-        public int? ParentId { get; set; }
+        public Int64? ParentId { get; set; }
 
         [IgnoreDataMember]
         public List<Device> Devices { get; set; }

@@ -9,6 +9,7 @@ using System.Web.SessionState;
 using System.Web.Http;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using Microsoft.AspNet.SignalR;
 
 namespace Automato.Web
 {
@@ -26,6 +27,17 @@ namespace Automato.Web
             jsonSetting.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
             jsonSetting.ContractResolver = new CamelCasePropertyNamesContractResolver();
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings = jsonSetting;
+
+            // Make signalR send lowercase property names
+            var settings = new JsonSerializerSettings();
+            settings.ContractResolver = new SignalRContractResolver();
+            //var serializer = new JsonNetSerializer(settings);
+            //GlobalHost.DependencyResolver.Register(typeof(IJsonSerializer), () => serializer);
+
+            //var settings = new JsonSerializerSettings();
+            //settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            var serializer = JsonSerializer.Create(settings);
+            GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), () => serializer);
         }
     }
 }

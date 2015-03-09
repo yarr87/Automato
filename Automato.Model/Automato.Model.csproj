@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Device.cs" />
+    <Compile Include="DeviceStateUpdate.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="DeviceTagMap.cs" />
     <Compile Include="DeviceType.cs" />

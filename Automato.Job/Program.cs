@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Automato.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using WebSocketSharp;
 
 namespace Automato.Job
@@ -14,6 +16,10 @@ namespace Automato.Job
     {
         static void Main(string[] args)
         {
+            //var updates1 = new List<DeviceStateUpdate>(){
+            //    new DeviceStateUpdate() { InternalName = "testing", State = "state" }
+            //};
+            //new ApiClient().SendStatusUpdates(updates1);
             // AutoResetEvent closeEvent = new AutoResetEvent(false);
 
             //AtmosphereWebSocket webSocketClient = new AtmosphereWebSocket("ws://127.0.0.1:30222/notification/ksspush");
@@ -30,7 +36,7 @@ namespace Automato.Job
             //new KeyValuePair<string, string>("Content-Type", "application/json")
 
             //var url = "ws://localhost:8080/rest/sitemaps/default/default?X-Atmosphere-tracking-id=abcd&X-Atmosphere-Framework=0.9&X-Atmosphere-Transport=websocket&X-Cache-Date=0&Accept=application%2Fjson";
-            var url = "ws://localhost:8080/rest/sitemaps/default/default?X-Atmosphere-tracking-id=abcd&X-Atmosphere-Framework=0.9&X-Atmosphere-Transport=websocket&X-Cache-Date=0&Accept=application%2Fjson";
+            var url = "ws://localhost:8080/rest/sitemaps/default/default?X-Atmosphere-tracking-id=abcd&X-Atmosphere-Framework=0.9&X-Atmosphere-Transport=websocket&X-Cache-Date=0&Accept=application%2Fxml";
 
             using (var ws = new WebSocket(url)) //"ws://localhost:8080/rest/items/Z_switch1?X-Atmosphere-Transport=websocket&X-Atmosphere-tracking-id=1234&x-atmo-protocol=true&Accept=application/json"))
 
@@ -39,8 +45,29 @@ namespace Automato.Job
                 ws.OnMessage += (sender, e) =>
                 {
                     Console.WriteLine("Message: " + e.Data);
+
+                    using(var reader = new StringReader(e.Data))
+                    {
+                        var xml = XDocument.Load(reader);
+
+                        var updates = (from widget in xml.Element("widgets").Elements("widget")
+                                       from item in widget.Elements("item")
+                                       select new DeviceStateUpdate()
+                                       {
+                                           InternalName = item.Element("name").Value,
+                                           State = item.Element("state").Value
+                                       }).ToList();
+
+                        var task = Task.Run(async () =>
+                        {
+                           await new ApiClient().SendStatusUpdates(updates);
+                        });
+
+                        task.Wait();
+                    }
                 };
-                ws.EnableRedirection = true;
+                
+                //ws.EnableRedirection = true;
                 ws.Connect();
                 //ws.Send("BALUS");
                 Console.ReadKey(true);
