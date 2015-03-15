@@ -41,8 +41,12 @@ namespace Automato.Logic
                     // Make sure the isIndirect property is included on each tag from the map table
                     foreach (var tagWrapper in d.tags)
                     {
-                        tagWrapper.tag.IsIndirect = tagWrapper.map.IsIndirect;
-                        device.Tags.Add(tagWrapper.tag);
+                        // Some of the tagWrapper.tag objects are shared, so we can't update them directly
+                        Tag tag = new Tag() { Id = tagWrapper.tag.Id };
+                        tag.CopyFrom(tagWrapper.tag);
+                        tag.IsIndirect = tagWrapper.map.IsIndirect;
+                        
+                        device.Tags.Add(tag);
                     }
 
                     return device;

@@ -14,7 +14,11 @@ namespace Automato.Logic
         {
             using (var db = new TomatoContext())
             {
-                return db.Tags.OrderBy(t => t.ParentId.HasValue).OrderBy(t => t.Name).ToList();
+                var query = db.Tags.OrderBy(t => t.ParentId.HasValue).ThenBy(t => t.Name);
+                    
+                var data = query.ToList();
+
+                return data;
             }
         }
 
