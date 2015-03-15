@@ -21,7 +21,11 @@ namespace Automato.Logic
                                let deviceTags = from map in db.DeviceTagMaps
                                                 join tag in db.Tags on map.TagId equals tag.Id
                                                 where map.DeviceId == device.Id
-                                                select tag
+                                                select new
+                                                {
+                                                    tag = tag,
+                                                    map = map
+                                                }
                                select new
                                {
                                    device = device,
@@ -32,7 +36,15 @@ namespace Automato.Logic
                 var allDevices = devices.Select(d =>
                 {
                     var device = d.device;
-                    device.Tags = d.tags;
+                    device.Tags = new List<Tag>();
+
+                    // Make sure the isIndirect property is included on each tag from the map table
+                    foreach (var tagWrapper in d.tags)
+                    {
+                        tagWrapper.tag.IsIndirect = tagWrapper.map.IsIndirect;
+                        device.Tags.Add(tagWrapper.tag);
+                    }
+
                     return device;
                 }).ToList();
 
@@ -50,8 +62,12 @@ namespace Automato.Logic
 
         public void AddOrEditDevice(Device device)
         {
+            RemoveParentTags(device.Tags);
+
             using (var db = new TomatoContext())
             {
+                var allTags = db.Tags.ToList();
+
                 // New device
                 if (device.Id == 0)
                 {
@@ -74,9 +90,23 @@ namespace Automato.Logic
                         db.DeviceTagMaps.Add(map);
                     }
 
-                    device.Tags = tags;
+                    var parentTags = GetParentTags(tags, allTags);
+
+                    foreach (var parentTag in parentTags)
+                    {
+                        parentTag.IsIndirect = true;
+                        db.DeviceTagMaps.Add(new DeviceTagMap()
+                        {
+                            TagId = parentTag.Id,
+                            DeviceId = device.Id,
+                            IsIndirect = true
+                        });
+                        tags.Add(parentTag);
+                    }
 
                     db.SaveChanges();
+
+                    device.Tags = tags;
                 }
                 else
                 {
@@ -86,14 +116,20 @@ namespace Automato.Logic
                     {
                         var maps = db.DeviceTagMaps.Where(m => m.DeviceId == existing.Id).ToList();
 
-                        // Remove maps that were deleted
-                        foreach (var map in maps)
+                        // Remove maps that were deleted.  This will also remove indirect tags, which will be added later.
+                        for(var i = maps.Count - 1; i >= 0; i--)
                         {
-                            if (!device.Tags.Any(t => t.Id == map.TagId))
+                            var map = maps[i];
+
+                            if (!device.Tags.Any(t => t.Id == map.TagId) || map.IsIndirect.GetValueOrDefault())
                             {
                                 db.DeviceTagMaps.Remove(map);
+                                maps.RemoveAt(i);
                             }
                         }
+
+                        // Save the deletes first
+                        db.SaveChanges();
 
                         // Add new maps
                         foreach (var tag in device.Tags)
@@ -108,17 +144,99 @@ namespace Automato.Logic
                             }
                         }
 
+                        var parentTags = GetParentTags(device.Tags, allTags);
+
+                        foreach (var parentTag in parentTags)
+                        {
+                            parentTag.IsIndirect = true;
+                            db.DeviceTagMaps.Add(new DeviceTagMap()
+                            {
+                                TagId = parentTag.Id,
+                                DeviceId = device.Id,
+                                IsIndirect = true
+                            });
+                        }
+
+                        // This needs to be after all the map updates or bad things happen
                         existing.CopyFrom(device);
 
                         // Can't save with tags
                         var tags = device.Tags;
                         existing.Tags = null;
-
+                        
                         db.SaveChanges();
 
+                        tags.AddRange(parentTags);
+
                         existing.Tags = tags;
+                        device.Tags = tags;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Return a list of all parent tags for the given list.  These will be indirect tags on a device.
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        private List<Tag> GetParentTags(List<Tag> tags, List<Tag> allTags)
+        {
+            var parentTags = new List<Tag>();
+
+            foreach (var tag in tags)
+            {
+                parentTags.AddRange(GetParentTags(tag, allTags));
+            }
+
+            return parentTags;
+        }
+
+        private List<Tag> GetParentTags(Tag tag, List<Tag> allTags)
+        {
+            var parentTags = new List<Tag>();
+
+            if (tag.ParentId.HasValue)
+            {
+                var parent = allTags.FirstOrDefault(t => t.Id == tag.ParentId);
+
+                if (parentTags.Any(t => t.Id == parent.Id))
+                {
+                    throw new InvalidOperationException("Tag cycle detected");
+                }
+
+                parentTags.Add(parent);
+
+                parentTags.AddRange(GetParentTags(parent, allTags));
+            }
+
+            return parentTags;
+        }
+
+        /// <summary>
+        /// Give a list of tags, remove the ones that are unnecessary because they are parents
+        /// of other tags
+        /// </summary>
+        private void RemoveParentTags(List<Tag> tags)
+        {
+            var toDelete = new List<Tag>();
+
+            foreach (var tag in tags)
+            {
+                if (tag.ParentId != null)
+                {
+                    var parent = tags.FirstOrDefault(t => t.Id == tag.ParentId);
+
+                    if (parent != null)
+                    {
+                        toDelete.Add(parent);
+                    }
+                }
+            }
+
+            foreach (var del in toDelete)
+            {
+                tags.Remove(del);
             }
         }
 

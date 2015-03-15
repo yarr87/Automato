@@ -280,6 +280,7 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DeviceStateController.cs" />
+    <Compile Include="Controllers\SceneController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\DevicesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
