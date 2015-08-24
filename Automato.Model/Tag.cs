@@ -10,11 +10,11 @@ namespace Automato.Model
 {
     public class Tag
     {
-        public Int64 Id { get; set; }
+        public string Id { get; set; }
 
         public string Name { get; set; }
 
-        public Int64? ParentId { get; set; }
+        public string ParentId { get; set; }
 
         /// <summary>
         /// Used to indicate a tag is not a direct member of a device.  Not in the database, and no meaning

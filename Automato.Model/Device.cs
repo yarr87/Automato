@@ -13,7 +13,7 @@ namespace Automato.Model
         /// <summary>
         /// Auto-gen id
         /// </summary>
-        public Int64 Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Protocol-specific id (ie, zwave node id for config file)
@@ -32,7 +32,7 @@ namespace Automato.Model
 
         public DeviceType Type { get; set; }
 
-        public List<Tag> Tags { get; set; }
+        public List<DeviceTag> Tags { get; set; }
 
         /// <summary>
         /// Not in the database, loaded directly from device
@@ -40,13 +40,13 @@ namespace Automato.Model
         [NotMapped]
         public string State { get; set; }
 
-        public void CopyFrom(Device device)
-        {
-            this.NodeId = device.NodeId;
-            this.Name = device.Name;
-            this.InternalName = device.InternalName;
-            this.Type = device.Type;
-            this.Tags = device.Tags;
-        }
+        //public void CopyFrom(Device device)
+        //{
+        //    this.NodeId = device.NodeId;
+        //    this.Name = device.Name;
+        //    this.InternalName = device.InternalName;
+        //    this.Type = device.Type;
+        //    this.Tags = device.Tags;
+        //}
     }
 }

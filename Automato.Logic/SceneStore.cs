@@ -12,43 +12,45 @@ namespace Automato.Logic
     {
         public IEnumerable<Scene> GetScenes()
         {
-            using (var db = new TomatoContext())
-            {
-                var scenes = (from scene in db.Scenes
-                              let sceneDevices = from sceneDevice in db.SceneDevices
-                                                 join device in db.Devices on sceneDevice.DeviceId equals device.Id
-                                                 where sceneDevice.SceneId == scene.Id
-                                                 select new
-                                                 {
-                                                     device = device,
-                                                     sceneDevice = sceneDevice
-                                                 }
-                              select new
-                              {
-                                  scene = scene,
-                                  sceneDevices = sceneDevices
-                              }).ToList();
+            return Enumerable.Empty<Scene>();
 
-                var allScenes = scenes.Select(s =>
-                {
-                    var scene = s.scene;
-                    scene.Devices = new List<SceneDevice>();
+            //using (var db = new TomatoContext())
+            //{
+            //    var scenes = (from scene in db.Scenes
+            //                  let sceneDevices = from sceneDevice in db.SceneDevices
+            //                                     join device in db.Devices on sceneDevice.DeviceId equals device.Id
+            //                                     where sceneDevice.SceneId == scene.Id
+            //                                     select new
+            //                                     {
+            //                                         device = device,
+            //                                         sceneDevice = sceneDevice
+            //                                     }
+            //                  select new
+            //                  {
+            //                      scene = scene,
+            //                      sceneDevices = sceneDevices
+            //                  }).ToList();
 
-                    foreach (var deviceWrapper in s.sceneDevices)
-                    {
-                        var sceneDevice = deviceWrapper.sceneDevice;
-                        sceneDevice.Name = deviceWrapper.device.Name;
-                        sceneDevice.InternalName = deviceWrapper.device.InternalName;
-                        sceneDevice.Type = deviceWrapper.device.Type;
+            //    var allScenes = scenes.Select(s =>
+            //    {
+            //        var scene = s.scene;
+            //        scene.Devices = new List<SceneDevice>();
 
-                        scene.Devices.Add(sceneDevice);
-                    }
+            //        foreach (var deviceWrapper in s.sceneDevices)
+            //        {
+            //            var sceneDevice = deviceWrapper.sceneDevice;
+            //            sceneDevice.Name = deviceWrapper.device.Name;
+            //            sceneDevice.InternalName = deviceWrapper.device.InternalName;
+            //            sceneDevice.Type = deviceWrapper.device.Type;
 
-                    return scene;
-                }).ToList();
+            //            scene.Devices.Add(sceneDevice);
+            //        }
 
-                return allScenes;
-            }
+            //        return scene;
+            //    }).ToList();
+
+            //    return allScenes;
+            //}
         }
     }
 }
