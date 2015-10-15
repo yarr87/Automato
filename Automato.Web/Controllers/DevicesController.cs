@@ -13,10 +13,14 @@ namespace Automato.Web.Controllers
 {
     public class DevicesController : ApiController
     {
+        /// <summary>
+        /// Get a list of all devices.  Includes current state.
+        /// </summary>
+        /// <returns></returns>
         [Route("api/devices")]
-        public IEnumerable<Device> Get()
+        public async Task<IEnumerable<Device>> Get()
         {
-            return new DeviceStore().GetDevices();
+            return await new DeviceStore().GetDevices();
         }
 
         [Route("api/devices/{id}")]

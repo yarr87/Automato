@@ -44,26 +44,38 @@ namespace Automato.Job
             {
                 ws.OnMessage += (sender, e) =>
                 {
-                    Console.WriteLine("Message: " + e.Data);
-
-                    using(var reader = new StringReader(e.Data))
+                    try
                     {
-                        var xml = XDocument.Load(reader);
+                        Console.WriteLine("Message: " + e.Data);
 
-                        var updates = (from widget in xml.Element("widgets").Elements("widget")
-                                       from item in widget.Elements("item")
-                                       select new DeviceStateUpdate()
-                                       {
-                                           InternalName = item.Element("name").Value,
-                                           State = item.Element("state").Value
-                                       }).ToList();
-
-                        var task = Task.Run(async () =>
+                        using (var reader = new StringReader(e.Data))
                         {
-                           await new ApiClient().SendStatusUpdates(updates);
-                        });
+                            var xml = XDocument.Load(reader);
 
-                        task.Wait();
+                            var widgets = xml.Element("widgets");
+
+                            if (widgets != null)
+                            {
+                                var updates = (from widget in widgets.Elements("widget")
+                                               from item in widget.Elements("item")
+                                               select new DeviceState()
+                                               {
+                                                   InternalName = item.Element("name").Value,
+                                                   State = item.Element("state").Value
+                                               }).ToList();
+
+                                var task = Task.Run(async () =>
+                                {
+                                    await new ApiClient().SendStatusUpdates(updates);
+                                });
+
+                                task.Wait();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
                     }
                 };
                 

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -11,9 +12,9 @@ namespace Automato.Job
 {
     public class ApiClient
     {
-        public async Task SendStatusUpdates(IEnumerable<DeviceStateUpdate> updates)
+        public async Task SendStatusUpdates(IEnumerable<DeviceState> updates)
         {
-            var apiBaseUrl = "http://192.168.0.2:49310/";
+            var apiBaseUrl = ConfigurationManager.AppSettings["Api.Url"];// "http://localhost:49310/";// "http://192.168.0.2:49310/";
 
             using (var client = new HttpClient())
             {
@@ -23,11 +24,13 @@ namespace Automato.Job
 
                 try
                 {
+                    Console.WriteLine("Posting content to " + client.BaseAddress + "/api/devicestates");
+                    Console.WriteLine(content);
                     await client.PostAsync("/api/devicestates", new StringContent(content, Encoding.UTF8, "application/json"));
                 }
                 catch (Exception ex)
                 {
-                    var x = ex;
+                    Console.WriteLine(ex.Message);
                 }
             }
         }

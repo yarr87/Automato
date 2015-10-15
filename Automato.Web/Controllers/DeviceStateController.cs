@@ -38,14 +38,14 @@ namespace Automato.Web.Controllers
         }
 
         /// <summary>
-        /// React to multiple state updates in a batch.  Broadcast to all clients.  This happens in response to a device's
+        /// React to multiple state updates in a batch.  Broadcast to all clients.  This happens in response to a device's3
         /// state being updated either manually or via openHab.
         /// </summary>
         /// <param name="updates"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("api/devicestates")]
-        public IHttpActionResult StatesUpdated(IEnumerable<DeviceStateUpdate> updates)
+        public IHttpActionResult StatesUpdated(IEnumerable<DeviceState> updates)
         {
             DeviceStateHub.Value.Clients.All.broadcastStateUpdates(updates);
 

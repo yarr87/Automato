@@ -1,5 +1,4 @@
-﻿using Automato.Data;
-using Automato.Model;
+﻿using Automato.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

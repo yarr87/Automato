@@ -263,6 +263,7 @@
     <Content Include="js\component_list\componentList.jsx" />
     <Content Include="js\component_list\componentListItem.jsx" />
     <Content Include="js\component_list\componentListSearch.jsx" />
+    <None Include="Properties\PublishProfiles\TheServer.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
