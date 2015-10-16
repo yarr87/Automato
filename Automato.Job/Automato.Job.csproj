@@ -73,12 +73,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="websocket-sharp">
-      <HintPath>..\packages\WebSocketSharp.1.0.3-rc7\lib\websocket-sharp.dll</HintPath>
-    </Reference>
-    <Reference Include="WebSocket4Net">
-      <HintPath>..\packages\WebSocket4Net.0.11\lib\net45\WebSocket4Net.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClient.cs" />
@@ -91,6 +85,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Automato.Integration\Automato.Integration.csproj">
+      <Project>{f2e632c9-57a1-441b-a783-584e6e68f63e}</Project>
+      <Name>Automato.Integration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Automato.Model\Automato.Model.csproj">
       <Project>{efd14a3f-303e-4a38-9eb6-a857fbebd34c}</Project>
       <Name>Automato.Model</Name>

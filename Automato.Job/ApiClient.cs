@@ -24,9 +24,9 @@ namespace Automato.Job
 
                 try
                 {
-                    Console.WriteLine("Posting content to " + client.BaseAddress + "/api/devicestates");
+                    Console.WriteLine("Posting content to " + client.BaseAddress + "api/devicestates");
                     Console.WriteLine(content);
-                    await client.PostAsync("/api/devicestates", new StringContent(content, Encoding.UTF8, "application/json"));
+                    await client.PostAsync("api/devicestates", new StringContent(content, Encoding.UTF8, "application/json"));
                 }
                 catch (Exception ex)
                 {
