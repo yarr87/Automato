@@ -12,6 +12,12 @@ namespace Automato.Job
 {
     public class ApiClient
     {
+        /// <summary>
+        /// Send a list of device statuses to the api.  Usually this will be one at a time in response to an openhab
+        /// server push after a switch is updated.
+        /// </summary>
+        /// <param name="updates"></param>
+        /// <returns></returns>
         public async Task SendStatusUpdates(IEnumerable<DeviceState> updates)
         {
             var apiBaseUrl = ConfigurationManager.AppSettings["Api.Url"];// "http://localhost:49310/";// "http://192.168.0.2:49310/";
