@@ -12,6 +12,11 @@ namespace Automato.Model
     public class User
     {
         /// <summary>
+        /// Auto-gen id
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
         /// Name of the user
         /// </summary>
         public string Name { get; set; }

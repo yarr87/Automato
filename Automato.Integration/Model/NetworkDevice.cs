@@ -13,12 +13,12 @@ namespace Automato.Integration.Model
     public class NetworkDevice
     {
         [JsonProperty]
-        string Name { get; set; }
+        public string Name { get; set; }
 
         [JsonProperty]
-        string Mac { get; set; }
+        public string Mac { get; set; }
 
         [JsonProperty]
-        bool Status { get; set; }
+        public bool Status { get; set; }
     }
 }

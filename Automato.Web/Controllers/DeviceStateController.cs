@@ -38,7 +38,7 @@ namespace Automato.Web.Controllers
         }
 
         /// <summary>
-        /// React to multiple state updates in a batch.  Broadcast to all clients.  This happens in response to a device's3
+        /// React to multiple state updates in a batch.  Broadcast to all clients.  This happens in response to a device's
         /// state being updated either manually or via openHab.
         /// </summary>
         /// <param name="updates"></param>

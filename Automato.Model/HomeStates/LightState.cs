@@ -4,15 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Automato.Model
+namespace Automato.Model.HomeStates
 {
     /// <summary>
-    /// Represent's a device's state.  Used to send messages from Job to Api when device states are updated, and
-    /// when getting current state from openhab.  Also in the rules engine.
+    /// The state of a single light
     /// </summary>
-    public class DeviceState
+    public class LightState
     {
+        /// <summary>
+        /// Internal name of the light
+        /// </summary>
         public string InternalName { get; set; }
+
+        /// <summary>
+        /// State of the light
+        /// </summary>
         public string State { get; set; }
     }
 }

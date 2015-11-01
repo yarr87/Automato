@@ -84,9 +84,15 @@
   <ItemGroup>
     <Compile Include="Context.cs" />
     <Compile Include="DeviceStore.cs" />
+    <Compile Include="Rules\Processors\BaseRuleProcessor.cs" />
+    <Compile Include="Rules\Processors\LightRuleProcessor.cs" />
+    <Compile Include="Rules\Processors\TimeRuleProcessor.cs" />
+    <Compile Include="Rules\Processors\UserRuleProcessor.cs" />
+    <Compile Include="Rules\RulesEngine.cs" />
     <Compile Include="SceneStore.cs" />
     <Compile Include="TagStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Automato.Data\Automato.Data.csproj">
