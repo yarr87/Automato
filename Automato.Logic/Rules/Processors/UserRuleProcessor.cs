@@ -14,7 +14,7 @@ namespace Automato.Logic.Rules.Processors
     {
         public override bool IsRuleActive(UserRule rule, Model.HomeStates.HomeState state)
         {
-            var user = state.Users.FirstOrDefault(u => u.Name == rule.UserState.Name);
+            var user = state.Users.FirstOrDefault(u => u.UserId == rule.UserState.UserId);
 
             return user != null && user.IsHome == rule.UserState.IsHome;
         }

@@ -17,6 +17,16 @@ namespace Automato.Model.HomeStates
 
         public IEnumerable<UserState> Users { get; set; }
 
+        public HomeState Copy()
+        {
+            return new HomeState()
+            {
+                Time = this.Time,
+                Lights = this.Lights.Select(l => l.Copy()).ToList(),
+                Users = this.Users.Select(u => u.Copy()).ToList()
+            };
+        }
+
         // TODO:
         // outside weather
         // inside temperature

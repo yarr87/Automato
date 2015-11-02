@@ -1,5 +1,6 @@
 ﻿using Automato.Integration;
 using Automato.Logic;
+using Automato.Logic.Rules;
 using Automato.Model;
 using Automato.Model.Messages;
 using System;
@@ -41,10 +42,12 @@ namespace Automato.Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/users/presence")]
-        public IHttpActionResult UpdateUserPresence(IEnumerable<UserPresenceUpdate> updates)
+        public async Task<IHttpActionResult> UpdateUserPresence(IEnumerable<UserPresenceUpdate> updates)
         {
             var userStore = new UserStore();
             userStore.UpdateUserPresence(updates);
+
+            await new RulesManager().ProcessUserPresenceUpdates(updates.Where(u => !u.IsInitializationOnly));
 
             return Ok();
         }

@@ -12,13 +12,22 @@ namespace Automato.Model.HomeStates
     public class UserState
     {
         /// <summary>
-        /// Name of the user
+        /// Id of the user
         /// </summary>
-        public string Name { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// Presence flag
         /// </summary>
         public bool IsHome { get; set; }
+
+        public UserState Copy()
+        {
+            return new UserState()
+            {
+                UserId = this.UserId,
+                IsHome = this.IsHome
+            };
+        }
     }
 }

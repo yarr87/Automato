@@ -18,12 +18,37 @@ namespace Automato.Logic.Rules
             { RuleType.User, new UserRuleProcessor() }
         };
 
-        public IEnumerable<Rule> GetActiveRules(List<Rule> rules, HomeState previousState, HomeState currentState)
+        /// <summary>
+        /// Return the rules in the given list that were inactive in the previous state and are active in the current state
+        /// </summary>
+        /// <param name="rules"></param>
+        /// <param name="previousState"></param>
+        /// <param name="currentState"></param>
+        /// <returns></returns>
+        public IEnumerable<Rule> GetNewlyActiveRules(List<Rule> rules, HomeState previousState, HomeState currentState)
         {
-            return rules.Where(r => IsRuleActive(r, previousState, currentState));
+            return rules.Where(r => DidRuleChangeToActive(r, previousState, currentState));
         }
 
-        private bool IsRuleActive(Rule rule, HomeState previousState, HomeState currentState)
+        /// <summary>
+        /// Return true if the given rule is active for the given state
+        /// </summary>
+        /// <param name="rule"></param>
+        /// <param name="currentState"></param>
+        /// <returns></returns>
+        public bool IsRuleActive(Rule rule, HomeState currentState)
+        {
+            return rule.RuleDefinitions.All(d => IsRuleDefinitionActive(d, currentState));
+        }
+
+        /// <summary>
+        /// Return true if the given rule switched from inactive to active between the two given states
+        /// </summary>
+        /// <param name="rule"></param>
+        /// <param name="previousState"></param>
+        /// <param name="currentState"></param>
+        /// <returns></returns>
+        public bool DidRuleChangeToActive(Rule rule, HomeState previousState, HomeState currentState)
         {
             // TODO: group rules into and/or
             return rule.RuleDefinitions.All(d => IsRuleDefinitionActive(d, previousState, currentState));
@@ -31,12 +56,13 @@ namespace Automato.Logic.Rules
         
         private bool IsRuleDefinitionActive(BaseRuleDefinition ruleDefinition, HomeState previousState, HomeState currentState)
         {
-            var processor = _ruleProcessors[ruleDefinition.RuleType];
-
-            var isActive = processor.IsRuleActive(ruleDefinition, currentState);
-
             // A rule definition is active if it's active on the current state and wasn't active on the previou state
-            return isActive && !processor.IsRuleActive(ruleDefinition, previousState);
+            return IsRuleDefinitionActive(ruleDefinition, currentState) && !IsRuleDefinitionActive(ruleDefinition, previousState);
+        }
+
+        private bool IsRuleDefinitionActive(BaseRuleDefinition ruleDefinition, HomeState state)
+        {
+            return _ruleProcessors[ruleDefinition.RuleType].IsRuleActive(ruleDefinition, state);
         }
     }
 }

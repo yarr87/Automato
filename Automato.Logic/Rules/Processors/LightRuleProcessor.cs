@@ -17,7 +17,14 @@ namespace Automato.Logic.Rules.Processors
         {
             var light = state.Lights.FirstOrDefault(l => l.InternalName == rule.LightState.InternalName);
 
-            return light != null && light.State == rule.LightState.State;
+            return light != null && NormalizeState(light.State) == NormalizeState(rule.LightState.State);
+        }
+
+        private string NormalizeState(string state)
+        {
+            if (state == "0") return "OFF";
+            else if (state == "100") return "ON";
+            else return state;
         }
     }
 }

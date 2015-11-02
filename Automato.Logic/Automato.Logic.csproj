@@ -84,11 +84,14 @@
   <ItemGroup>
     <Compile Include="Context.cs" />
     <Compile Include="DeviceStore.cs" />
+    <Compile Include="HomeStates\HomeStateManager.cs" />
     <Compile Include="Rules\Processors\BaseRuleProcessor.cs" />
     <Compile Include="Rules\Processors\LightRuleProcessor.cs" />
     <Compile Include="Rules\Processors\TimeRuleProcessor.cs" />
     <Compile Include="Rules\Processors\UserRuleProcessor.cs" />
+    <Compile Include="Rules\RuleRunner.cs" />
     <Compile Include="Rules\RulesEngine.cs" />
+    <Compile Include="Rules\RulesManager.cs" />
     <Compile Include="SceneStore.cs" />
     <Compile Include="TagStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

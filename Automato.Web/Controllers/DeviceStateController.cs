@@ -1,4 +1,5 @@
 ﻿using Automato.Integration;
+using Automato.Logic.Rules;
 using Automato.Model;
 using Automato.Web.Hubs;
 using Microsoft.AspNet.SignalR;
@@ -45,9 +46,11 @@ namespace Automato.Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/devicestates")]
-        public IHttpActionResult StatesUpdated(IEnumerable<DeviceState> updates)
+        public async Task<IHttpActionResult> StatesUpdated(IEnumerable<DeviceState> updates)
         {
             DeviceStateHub.Value.Clients.All.broadcastStateUpdates(updates);
+
+            await new RulesManager().ProcessDeviceStateUpdates(updates);
 
             return Ok();
         }

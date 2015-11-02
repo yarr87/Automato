@@ -20,5 +20,14 @@ namespace Automato.Model.HomeStates
         /// State of the light
         /// </summary>
         public string State { get; set; }
+
+        public LightState Copy()
+        {
+            return new LightState()
+            {
+                InternalName = this.InternalName,
+                State = this.State
+            };
+        }
     }
 }

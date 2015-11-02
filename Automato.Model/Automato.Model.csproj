@@ -62,6 +62,7 @@
     <Compile Include="Device.cs" />
     <Compile Include="DeviceState.cs" />
     <Compile Include="DeviceTag.cs" />
+    <Compile Include="Extensions\BaseRuleDefinitionExtensions.cs" />
     <Compile Include="HomeStates\HomeState.cs" />
     <Compile Include="HomeStates\HomeStatePart.cs" />
     <Compile Include="HomeStates\LightState.cs" />
