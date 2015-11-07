@@ -1,4 +1,5 @@
-﻿using Automato.Model;
+﻿using Automato.Logic.Stores;
+using Automato.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,28 +8,18 @@ using System.Threading.Tasks;
 
 namespace Automato.Logic
 {
-    public class TagStore
+    public class TagStore : BaseStore<Tag>
     {
-        public IEnumerable<Tag> GetTags()
+        public override IEnumerable<Tag> GetAll()
         {
             using (var session = Context.DocumentStore.Value.OpenSession())
             {
-                
                 var tags = session.Query<Tag>().ToList();
 
                 // Ordering in memory because can't do this order query in raven
                 // TODO: could probably do this with an index
                 return tags.OrderBy(t => string.IsNullOrWhiteSpace(t.ParentId) ? 0 : 1).ThenBy(t => t.Name);
             }
-
-            //using (var db = new TomatoContext())
-            //{
-            //    var query = db.Tags.OrderBy(t => t.ParentId.HasValue).ThenBy(t => t.Name);
-                    
-            //    var data = query.ToList();
-
-            //    return data;
-            //}
         }
 
         public void AddOrEditTag(Tag tag)
@@ -64,28 +55,9 @@ namespace Automato.Logic
 
                 session.SaveChanges();
             }
-
-            //using (var db = new TomatoContext())
-            //{
-                //if (tag.Id == 0)
-                //{
-                //    db.Tags.Add(tag);
-                //}
-                //else
-                //{
-                //    var existing = db.Tags.FirstOrDefault(d => d.Id == tag.Id);
-
-                //    if (existing != null)
-                //    {
-                //        existing.CopyFrom(tag);
-                //    }
-                //}
-
-                //db.SaveChanges();
-            //}
         }
 
-        public void DeleteById(string id)
+        public override void DeleteById(string id)
         {
             using (var session = Context.DocumentStore.Value.OpenSession())
             {
@@ -103,26 +75,6 @@ namespace Automato.Logic
 
                 // TODO: delete all references in devices
             }
-
-            //using (var db = new TomatoContext())
-            //{
-                //var tag = db.Tags.FirstOrDefault(d => d.Id == id);
-
-                //if (tag != null)
-                //{
-                //    db.Tags.Remove(tag);
-
-                //    // Delete maps for this tag
-                //    var maps = db.DeviceTagMaps.Where(m => m.TagId == id).ToList();
-
-                //    foreach (var map in maps)
-                //    {
-                //        db.DeviceTagMaps.Remove(map);
-                //    }
-
-                //    db.SaveChanges();
-                //}
-            //}
         }
     }
 }

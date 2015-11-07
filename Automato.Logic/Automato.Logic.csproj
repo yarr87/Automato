@@ -83,7 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
-    <Compile Include="DeviceStore.cs" />
+    <Compile Include="Stores\DeviceStore.cs" />
     <Compile Include="HomeStates\HomeStateManager.cs" />
     <Compile Include="Rules\Processors\BaseRuleProcessor.cs" />
     <Compile Include="Rules\Processors\LightRuleProcessor.cs" />
@@ -92,10 +92,12 @@
     <Compile Include="Rules\RuleRunner.cs" />
     <Compile Include="Rules\RulesEngine.cs" />
     <Compile Include="Rules\RulesManager.cs" />
-    <Compile Include="SceneStore.cs" />
-    <Compile Include="TagStore.cs" />
+    <Compile Include="Stores\RuleStore.cs" />
+    <Compile Include="Stores\SceneStore.cs" />
+    <Compile Include="Stores\BaseStore.cs" />
+    <Compile Include="Stores\TagStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserStore.cs" />
+    <Compile Include="Stores\UserStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Automato.Data\Automato.Data.csproj">

@@ -36,7 +36,7 @@ namespace Automato.Logic.HomeStates
             var lights = await new DeviceStore().GetDevices();
             homeState.Lights = lights.Select(l => new LightState() { InternalName = l.InternalName, State = l.State });
 
-            var users = new UserStore().GetUsers();
+            var users = new UserStore().GetAll();
             homeState.Users = users.Select(u => new UserState() { UserId = u.Id, IsHome = u.IsHome });
 
             return homeState;

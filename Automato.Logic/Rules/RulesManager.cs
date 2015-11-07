@@ -1,4 +1,5 @@
 ﻿using Automato.Logic.HomeStates;
+using Automato.Logic.Stores;
 using Automato.Model;
 using Automato.Model.Extensions;
 using Automato.Model.HomeStates;
@@ -18,81 +19,87 @@ namespace Automato.Logic.Rules
         RulesEngine _rulesEngine = new RulesEngine();
         RuleRunner _ruleRunner = new RuleRunner();
 
-        List<Rule> _rules = new List<Rule>()
-        {
-            new Rule() 
-            {
-                RuleDefinitions = new List<BaseRuleDefinition>()
-                {
-                    new LightRule() 
-                    { 
-                        IsTriggered = true,
-                        LightState = new Model.HomeStates.LightState() { InternalName = "Z_switch_kitchen_island", State = "ON" }
-                    },
-                    //new UserRule()
-                    //{
-                    //    IsTriggered = false,
-                    //    UserState = new Model.HomeStates.UserState() { UserId = "jeff_user_1", IsHome = true }
-                    //}
-                },
-                Action = new RuleAction()
-                {
-                    DeviceStates = new List<DeviceState>()
-                    {
-                        new DeviceState() { InternalName = "Z_switch_kitchen_sink", State = "ON" }
-                    }
-                }
-            },
-            new Rule() 
-            {
-                RuleDefinitions = new List<BaseRuleDefinition>()
-                {
-                    new LightRule() 
-                    { 
-                        IsTriggered = true,
-                        LightState = new Model.HomeStates.LightState() { InternalName = "Z_switch_kitchen_sink", State = "OFF" }
-                    },
-                    //new UserRule()
-                    //{
-                    //    IsTriggered = false,
-                    //    UserState = new Model.HomeStates.UserState() { UserId = "jeff_user_1", IsHome = true }
-                    //}
-                },
-                Action = new RuleAction()
-                {
-                    DeviceStates = new List<DeviceState>()
-                    {
-                        new DeviceState() { InternalName = "Z_switch_kitchen_island", State = "OFF" }
-                    }
-                }
-            },
-            new Rule() 
-            {
-                RuleDefinitions = new List<BaseRuleDefinition>()
-                {
-                    new UserRule()
-                    {
-                        IsTriggered = true,
-                        UserState = new Model.HomeStates.UserState() { UserId = "users-1", IsHome = true }
-                    }
-                },
-                Action = new RuleAction()
-                {
-                    DeviceStates = new List<DeviceState>()
-                    {
-                        new DeviceState() { InternalName = "Z_switch_kitchen_island", State = "ON" }
-                    }
-                }
-            }
-        };
+        //List<Rule> _rules = new List<Rule>()
+        //{
+        //    new Rule() 
+        //    {
+        //        RuleDefinitions = new List<BaseRuleDefinition>()
+        //        {
+        //            new LightRule() 
+        //            { 
+        //                IsTriggered = true,
+        //                LightState = new Model.HomeStates.LightState() { InternalName = "Z_switch_kitchen_island", State = "ON" }
+        //            },
+        //            //new UserRule()
+        //            //{
+        //            //    IsTriggered = false,
+        //            //    UserState = new Model.HomeStates.UserState() { UserId = "jeff_user_1", IsHome = true }
+        //            //}
+        //        },
+        //        Action = new RuleAction()
+        //        {
+        //            DeviceStates = new List<DeviceState>()
+        //            {
+        //                new DeviceState() { InternalName = "Z_switch_kitchen_sink", State = "ON" }
+        //            }
+        //        }
+        //    },
+        //    new Rule() 
+        //    {
+        //        RuleDefinitions = new List<BaseRuleDefinition>()
+        //        {
+        //            new LightRule() 
+        //            { 
+        //                IsTriggered = true,
+        //                LightState = new Model.HomeStates.LightState() { InternalName = "Z_switch_kitchen_sink", State = "OFF" }
+        //            },
+        //            //new UserRule()
+        //            //{
+        //            //    IsTriggered = false,
+        //            //    UserState = new Model.HomeStates.UserState() { UserId = "jeff_user_1", IsHome = true }
+        //            //}
+        //        },
+        //        Action = new RuleAction()
+        //        {
+        //            DeviceStates = new List<DeviceState>()
+        //            {
+        //                new DeviceState() { InternalName = "Z_switch_kitchen_island", State = "OFF" }
+        //            }
+        //        }
+        //    },
+        //    new Rule() 
+        //    {
+        //        RuleDefinitions = new List<BaseRuleDefinition>()
+        //        {
+        //            new UserRule()
+        //            {
+        //                IsTriggered = true,
+        //                UserState = new Model.HomeStates.UserState() { UserId = "users-1", IsHome = true }
+        //            }
+        //        },
+        //        Action = new RuleAction()
+        //        {
+        //            DeviceStates = new List<DeviceState>()
+        //            {
+        //                new DeviceState() { InternalName = "Z_switch_kitchen_island", State = "ON" }
+        //            }
+        //        }
+        //    }
+        //};
 
+        /// <summary>
+        /// When a device state is updated, trigger any appropriate rules
+        /// </summary>
+        /// <param name="deviceStates"></param>
+        /// <returns></returns>
         public async Task ProcessDeviceStateUpdates(IEnumerable<DeviceState> deviceStates)
         {
             var homeState = await _homeStateManager.GetCurrentHomeState();
+            var rules = new RuleStore().GetAll();
 
             foreach (var deviceState in deviceStates)
             {
-                var matchingRules = _rules.Where(r => r.RuleDefinitions
+                var matchingRules = rules.Where(r => r.RuleDefinitions
                                                             .GetLightRules()
                                                             .Any(lr => lr.LightState.InternalName == deviceState.InternalName && lr.IsTriggered));
                     
@@ -108,11 +115,17 @@ namespace Automato.Logic.Rules
             }
         }
 
+        /// <summary>
+        /// When a user's presence is updated, trigger any appropriate rules
+        /// </summary>
+        /// <param name="userUpdates"></param>
+        /// <returns></returns>
         public async Task ProcessUserPresenceUpdates(IEnumerable<UserPresenceUpdate> userUpdates)
         {
             var homeState = await _homeStateManager.GetCurrentHomeState();
 
-            var users = new UserStore().GetUsers();
+            var users = new UserStore().GetAll();
+            var rules = new RuleStore().GetAll();
 
             foreach (var userUpdate in userUpdates)
             {
@@ -120,7 +133,7 @@ namespace Automato.Logic.Rules
 
                 if (user == null) continue;
 
-                var matchingRules = _rules.Where(r => r.RuleDefinitions.GetUserRules()
+                var matchingRules = rules.Where(r => r.RuleDefinitions.GetUserRules()
                                                             .Any(ur => ur.UserState.UserId == user.Id && ur.IsTriggered));
 
                 var userState = new UserState() { UserId = user.Id, IsHome = userUpdate.IsHome };

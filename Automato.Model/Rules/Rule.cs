@@ -12,8 +12,18 @@ namespace Automato.Model.Rules
     /// </summary>
     public class Rule
     {
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
         public IEnumerable<BaseRuleDefinition> RuleDefinitions { get; set; }
 
         public RuleAction Action { get; set; }
+
+        public int ExecutionCount { get; set; }
+
+        public DateTime? LastExecuted { get; set; }
     }
 }

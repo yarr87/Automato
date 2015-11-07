@@ -45,7 +45,7 @@ namespace Automato.Job
 
         private async Task OnDevicesLoaded(IEnumerable<NetworkDevice> devices)
         {
-            var users = new UserStore().GetUsers();
+            var users = new UserStore().GetAll();
 
             var devicesWithUsers = devices.Where(d => users.Any(u => u.DeviceMac == d.Mac)).ToList();
 

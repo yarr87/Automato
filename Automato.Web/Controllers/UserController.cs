@@ -14,14 +14,12 @@ namespace Automato.Web.Controllers
 {
     public class UserController : ApiController
     {
-        private static List<User> _users = new List<User>();
-
         [HttpGet]
         [Route("api/users")]
         public IHttpActionResult GetUsers()
         {
             var userStore = new UserStore();
-            var users = userStore.GetUsers();
+            var users = userStore.GetAll();
             return Ok(users);
         }
 
@@ -50,13 +48,6 @@ namespace Automato.Web.Controllers
             await new RulesManager().ProcessUserPresenceUpdates(updates.Where(u => !u.IsInitializationOnly));
 
             return Ok();
-        }
-
-        [HttpGet]
-        [Route("api/users/status")]
-        public IHttpActionResult GetUserStatus()
-        {
-            return Ok(_users);
         }
 
         [Route("api/users/{id}")]

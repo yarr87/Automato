@@ -1,4 +1,5 @@
 ﻿using Automato.Integration;
+using Automato.Logic.Stores;
 using Automato.Model;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Xml.Serialization;
 
 namespace Automato.Logic
 {
-    public class DeviceStore
+    public class DeviceStore : BaseStore<Device>
     {
         public async Task<IEnumerable<Device>> GetDevices()
         {
@@ -112,15 +113,6 @@ namespace Automato.Logic
             }
 
             return parentTags;
-        }
-
-        public void DeleteById(string id)
-        {
-            using (var session = Context.DocumentStore.Value.OpenSession())
-            {
-                session.Delete(id);
-                session.SaveChanges();
-            }
         }
     }
 }

@@ -14,14 +14,8 @@ namespace Automato.Web.Controllers
         [Route("api/tags")]
         public IEnumerable<Tag> Get()
         {
-            return new TagStore().GetTags();
+            return new TagStore().GetAll();
         }
-
-        //[Route("api/tags/{id}")]
-        //public Device GetById(int id)
-        //{
-        //    return new DeviceStore().GetDeviceById(id);
-        //}
 
         [Route("api/tags")]
         [HttpPost]
