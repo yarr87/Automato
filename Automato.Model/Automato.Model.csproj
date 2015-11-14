@@ -48,6 +48,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.4\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -66,6 +73,7 @@
     <Compile Include="HomeStates\HomeState.cs" />
     <Compile Include="HomeStates\LightState.cs" />
     <Compile Include="HomeStates\UserState.cs" />
+    <Compile Include="JsonSubclassConverter.cs" />
     <Compile Include="Messages\UserPresenceUpdate.cs" />
     <Compile Include="Rules\BaseRuleDefinition.cs" />
     <Compile Include="Rules\IRuleDefinition.cs" />
@@ -82,6 +90,9 @@
     <Compile Include="DeviceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

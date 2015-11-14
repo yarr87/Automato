@@ -10,6 +10,7 @@ using System.Web.Http;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using Microsoft.AspNet.SignalR;
+using System.Web.Http.ExceptionHandling;
 
 namespace Automato.Web
 {
@@ -38,6 +39,9 @@ namespace Automato.Web
             //settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             var serializer = JsonSerializer.Create(settings);
             GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), () => serializer);
+
+            log4net.Config.XmlConfigurator.Configure();
+            GlobalConfiguration.Configuration.Services.Add(typeof(IExceptionLogger), new GlobalExceptionLogger());
         }
     }
 }
