@@ -1,4 +1,5 @@
-﻿using Automato.Model.Rules;
+﻿using Automato.Model.HomeStates;
+using Automato.Model.Rules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +9,38 @@ using System.Threading.Tasks;
 namespace Automato.Logic.Rules.Processors
 {
     /// <summary>
-    /// Tells if the given time rule is active.  This means we are after the time defined in the rule, but within an hour
+    /// Tells if the given time rule is active.  This means we are within the time range defined, or if it's a single point-in-time,
+    /// we are after it but within the rule-processing step time.
     /// </summary>
     public class TimeRuleProcessor : BaseRuleProcessor<TimeRule>
     {
-        public override bool IsRuleActive(TimeRule rule, Model.HomeStates.HomeState state)
+        public override bool IsRuleActive(TimeRule rule, HomeState state)
         {
-            var timeSpan = state.Time - rule.StartTime;
+            var currentTime = state.Time.TimeOfDay;
 
-            // Arbitrarily chose an hour.  Not sure if it's even needed, just make sure it's after the time and if the previous
-            // state is before the rule will trigger.
-            // TODO: handle time range rules
-            return timeSpan.TotalSeconds > 0 && timeSpan.TotalHours <= 1;
+            // Point in time rule
+            if (rule.Start == rule.End)
+            {
+                // We need to have a window of time so a point in time doesn't trigger much later.  For example a rule is "at 6pm if Jeff is home, turn on a light", but
+                // I get home at 8pm.  It shouldn't trigger that rule.  The 5 minutes should be less than or equal to the frequency we run the rules via job.
+                var endOfWindow = rule.Start.Add(TimeSpan.FromMinutes(5));
+
+                return rule.Start <= currentTime && endOfWindow >= currentTime;
+            }
+            // Range rule
+            else
+            {
+                // Single-day range
+                if (rule.Start < rule.End)
+                {
+                    return rule.Start <= currentTime && rule.End >= currentTime;
+                }
+                // Day-spanning range
+                else
+                {
+                    return rule.Start <= currentTime || rule.End >= currentTime;
+                }
+            }
         }
     }
 }

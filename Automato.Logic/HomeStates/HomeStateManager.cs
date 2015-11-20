@@ -16,19 +16,6 @@ namespace Automato.Logic.HomeStates
         /// <returns></returns>
         public async Task<HomeState> GetCurrentHomeState()
         {
-            //return new HomeState()
-            //{
-            //    Time = DateTime.Now,
-            //    Users = new List<UserState>()
-            //    {
-            //        new UserState() { UserId = "jeff_user_1", IsHome = true }
-            //    },
-            //    Lights = new List<LightState>()
-            //    {
-            //        new LightState() { InternalName = "Z_test", State = "OFF" }
-            //    }
-            //};
-
             var homeState = new HomeState();
 
             homeState.Time = DateTime.Now;
@@ -42,6 +29,12 @@ namespace Automato.Logic.HomeStates
             return homeState;
         }
 
+        /// <summary>
+        /// Applies the given light state change to the given home state, and returns the newly calculated home state.
+        /// </summary>
+        /// <param name="currentState"></param>
+        /// <param name="lightState"></param>
+        /// <returns></returns>
         public HomeState ApplyLightStateChange(HomeState currentState, DeviceState lightState)
         {
             var newState = currentState.Copy();
@@ -56,6 +49,12 @@ namespace Automato.Logic.HomeStates
             return newState;
         }
 
+        /// <summary>
+        /// Applies the given user state change to the given home state, and returns the newly calculated home state.
+        /// </summary>
+        /// <param name="currentState"></param>
+        /// <param name="userState"></param>
+        /// <returns></returns>
         public HomeState ApplyUserStateChange(HomeState currentState, UserState userState)
         {
             var newState = currentState.Copy();

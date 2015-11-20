@@ -11,6 +11,7 @@ namespace Automato.Model.Rules
     /// </summary>
     public enum RuleType
     {
+        Day,
         Light,
         Time,
         User

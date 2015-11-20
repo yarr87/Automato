@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="Rules\Processors\DayRuleProcessor.cs" />
     <Compile Include="Stores\DeviceStore.cs" />
     <Compile Include="HomeStates\HomeStateManager.cs" />
     <Compile Include="Rules\Processors\BaseRuleProcessor.cs" />

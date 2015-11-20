@@ -76,6 +76,7 @@
     <Compile Include="JsonSubclassConverter.cs" />
     <Compile Include="Messages\UserPresenceUpdate.cs" />
     <Compile Include="Rules\BaseRuleDefinition.cs" />
+    <Compile Include="Rules\DayRule.cs" />
     <Compile Include="Rules\IRuleDefinition.cs" />
     <Compile Include="Rules\IRuleProcessor.cs" />
     <Compile Include="Rules\LightRule.cs" />
