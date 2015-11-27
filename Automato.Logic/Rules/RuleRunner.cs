@@ -1,5 +1,7 @@
 ﻿using Automato.Integration;
+using Automato.Logic.Rules.Actions;
 using Automato.Model.Rules;
+using Automato.Model.Rules.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +15,22 @@ namespace Automato.Logic.Rules
     /// </summary>
     public class RuleRunner
     {
+        private Dictionary<RuleActionType, IRuleActionRunner> _actionRunners = new Dictionary<RuleActionType, IRuleActionRunner>()
+        {
+            { RuleActionType.Light, new LightRuleActionRunner() },
+            { RuleActionType.EmailAsText, new EmailAsTextRuleActionRunner() }
+        };
+
         public async Task RunRule(Rule rule)
         {
-            foreach (var deviceState in rule.Action.DeviceStates)
+            foreach (var action in rule.Actions)
             {
-                await new OpenHabRestService().SendCommand(deviceState.InternalName, deviceState.State);
+                var runner = _actionRunners[action.ActionType];
+
+                if (runner != null)
+                {
+                    await runner.ExecuteActionAsync(action);
+                }
             }
         }
     }

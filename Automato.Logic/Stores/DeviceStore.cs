@@ -14,6 +14,14 @@ namespace Automato.Logic
 {
     public class DeviceStore : BaseStore<Device>
     {
+        protected override Func<Device, string> SortExpr
+        {
+            get
+            {
+                return (d) => d.Name;
+            }
+        }
+
         public async Task<IEnumerable<Device>> GetDevices()
         {
             var devices = GetDevicesWithoutState();
@@ -36,12 +44,7 @@ namespace Automato.Logic
 
         private IEnumerable<Device> GetDevicesWithoutState()
         {
-            using (var session = Context.DocumentStore.Value.OpenSession())
-            {
-                var devices = session.Query<Device>();
-
-                return devices.ToList();
-            }
+            return GetAll();
         }
 
         public Device GetDeviceById(int id)

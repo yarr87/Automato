@@ -8,13 +8,28 @@ namespace Automato.Logic.Stores
 {
     public abstract class BaseStore<T>
     {
+        protected virtual Func<T, string> SortExpr { get; }
+
         public virtual IEnumerable<T> GetAll()
         {
+            // TODO: store the list statically, and return from memory if it's there.  No need to go to the db each time since there's only
+            // one instance.   ...is that true?  Need to make sure that won't break the job either though.
             using (var session = Context.DocumentStore.Value.OpenSession())
             {
                 var query = session.Query<T>();
 
-                return query.ToList();
+                var data = query.ToList();
+
+                if (SortExpr != null)
+                {
+                    // TODO: do the sort in the database
+                    // I think you need to set up indexes or something in Raven.  Not expecting a large dat load here, so in memory isn't a huge deal.
+                    return data.OrderBy(SortExpr);
+                }
+                else
+                {
+                    return data;
+                }
             }
         }
 

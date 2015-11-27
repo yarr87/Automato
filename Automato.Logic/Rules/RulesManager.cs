@@ -13,10 +13,13 @@ using System.Threading.Tasks;
 
 namespace Automato.Logic.Rules
 {
+    /// <summary>
+    /// Checks for active rules and runs them, at the appropriate times
+    /// </summary>
     public class RulesManager
     {
         HomeStateManager _homeStateManager = new HomeStateManager();
-        RulesEngine _rulesEngine = new RulesEngine();
+        RulesProcessorEngine _rulesEngine = new RulesProcessorEngine();
         RuleRunner _ruleRunner = new RuleRunner();
 
         /// <summary>

@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 
 namespace Automato.Logic.Rules
 {
-    public class RulesEngine
+    /// <summary>
+    /// Figures out which rules are active
+    /// </summary>
+    public class RulesProcessorEngine
     {
         private Dictionary<RuleType, IRuleProcessor> _ruleProcessors = new Dictionary<RuleType, IRuleProcessor>()
         {

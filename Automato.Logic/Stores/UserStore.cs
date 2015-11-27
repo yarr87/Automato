@@ -15,6 +15,14 @@ namespace Automato.Logic
 {
     public class UserStore : BaseStore<User>
     {
+        protected override Func<User, string> SortExpr
+        {
+            get
+            {
+                return (u) => u.Name;
+            }
+        }
+
         public void UpdateUserPresence(IEnumerable<UserPresenceUpdate> updates)
         {
             using (var session = Context.DocumentStore.Value.OpenSession())
@@ -54,6 +62,8 @@ namespace Automato.Logic
                     {
                         existingUser.Name = user.Name;
                         existingUser.DeviceMac = user.DeviceMac;
+                        existingUser.Email = user.Email;
+                        existingUser.TextAddress = user.TextAddress;
                     }
                     else
                     {

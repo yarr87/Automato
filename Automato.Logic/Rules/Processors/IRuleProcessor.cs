@@ -1,11 +1,12 @@
 ﻿using Automato.Model.HomeStates;
+using Automato.Model.Rules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Automato.Model.Rules
+namespace Automato.Logic.Rules.Processors
 {
     // Man this took forever to get right
 
@@ -16,6 +17,6 @@ namespace Automato.Model.Rules
 
     public interface IRuleProcessor<T> where T : IRuleDefinition
     {
-        bool IsRuleActive(T rule, HomeState state); 
+        bool IsRuleActive(T rule, HomeState state);
     }
 }

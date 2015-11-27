@@ -10,7 +10,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,85 +24,34 @@ namespace Automato.Job
     {
         static void Main(string[] args)
         {
-            //List<Rule> _rules = new List<Rule>()
-            //{
-            //    new Rule() 
+            ////using (var smtp = new SmtpClient("smtp.gmail.com", 587))
+            ////{
+            //    try
             //    {
-            //        RuleDefinitions = new List<BaseRuleDefinition>()
+            //        var smtp = new SmtpClient
             //        {
-            //            new LightRule() 
-            //            { 
-            //                IsTriggered = true,
-            //                LightState = new Model.HomeStates.LightState() { InternalName = "Z_switch_kitchen_island", State = "ON" }
-            //            },
-            //            //new UserRule()
-            //            //{
-            //            //    IsTriggered = false,
-            //            //    UserState = new Model.HomeStates.UserState() { UserId = "jeff_user_1", IsHome = true }
-            //            //}
-            //        },
-            //        Action = new RuleAction()
-            //        {
-            //            DeviceStates = new List<DeviceState>()
-            //            {
-            //                new DeviceState() { InternalName = "Z_switch_kitchen_sink", State = "ON" }
-            //            }
-            //        }
-            //    },
-            //    new Rule() 
-            //    {
-            //        RuleDefinitions = new List<BaseRuleDefinition>()
-            //        {
-            //            new LightRule() 
-            //            { 
-            //                IsTriggered = true,
-            //                LightState = new Model.HomeStates.LightState() { InternalName = "Z_switch_kitchen_sink", State = "OFF" }
-            //            },
-            //            //new UserRule()
-            //            //{
-            //            //    IsTriggered = false,
-            //            //    UserState = new Model.HomeStates.UserState() { UserId = "jeff_user_1", IsHome = true }
-            //            //}
-            //        },
-            //        Action = new RuleAction()
-            //        {
-            //            DeviceStates = new List<DeviceState>()
-            //            {
-            //                new DeviceState() { InternalName = "Z_switch_kitchen_island", State = "OFF" }
-            //            }
-            //        }
-            //    },
-            //    new Rule() 
-            //    {
-            //        RuleDefinitions = new List<BaseRuleDefinition>()
-            //        {
-            //            new UserRule()
-            //            {
-            //                IsTriggered = true,
-            //                UserState = new Model.HomeStates.UserState() { UserId = "users-1", IsHome = true }
-            //            }
-            //        },
-            //        Action = new RuleAction()
-            //        {
-            //            DeviceStates = new List<DeviceState>()
-            //            {
-            //                new DeviceState() { InternalName = "Z_switch_kitchen_island", State = "ON" }
-            //            }
-            //        }
+            //            Host = "smtp.gmail.com",
+            //            Port = 587,
+            //            EnableSsl = true,
+            //            DeliveryMethod = SmtpDeliveryMethod.Network,
+            //            Credentials = new NetworkCredential("rosenberg19fitz@gmail.com", "Th3Hous419*Fi84#"),
+            //            Timeout = 3000
+            //        };
+
+            //        //smtp.UseDefaultCredentials = false;
+
+            //        var msg = new MailMessage("rosenberg19fitz@gmail.com", "6173127854@text.republicwireless.com");
+            //        msg.Body = "testing";
+
+            //        smtp.Send(msg);
             //    }
-            //};
-
-            //foreach (var rule in _rules)
-            //{
-            //    //new RuleStore().Save(rule);
-            //}
-
-            //var saved = new RuleStore().GetAll();
-
-            //var a = saved;
+            //    catch (Exception ex)
+            //    {
+            //        var x = ex.Message;
+            //    }
+            ////}
 
             //return;
-
 
             var url = ConfigurationManager.AppSettings["OpenHab.WebSocketUrl"];
 

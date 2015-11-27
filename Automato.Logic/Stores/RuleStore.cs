@@ -9,6 +9,14 @@ namespace Automato.Logic.Stores
 {
     public class RuleStore : BaseStore<Rule>
     {
+        protected override Func<Rule, string> SortExpr
+        {
+            get
+            {
+                return (r) => r.Name;
+            }
+        }
+
         public void Save(Rule rule)
         {
             using (var session = Context.DocumentStore.Value.OpenSession())
@@ -30,7 +38,7 @@ namespace Automato.Logic.Stores
                     {
                         existingRule.Name = rule.Name;
                         existingRule.Description = rule.Description;
-                        existingRule.Action = rule.Action;
+                        existingRule.Actions = rule.Actions;
                         existingRule.RuleDefinitions = rule.RuleDefinitions;
                     }
                     else

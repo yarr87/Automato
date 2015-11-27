@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace Automato.Logic.Rules.Processors
 {
+    /// <summary>
+    /// Base class for a rule processor, which can detect if a specific rule definition type is active
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class BaseRuleProcessor<T> : IRuleProcessor<T>, IRuleProcessor where T : class, IRuleDefinition
     {
         public abstract bool IsRuleActive(T rule, HomeState state);

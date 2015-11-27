@@ -87,7 +87,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="Rules\Actions\BaseRuleActionRunner.cs" />
+    <Compile Include="Rules\Actions\EmailAsTextRuleActionRunner.cs" />
+    <Compile Include="Rules\Actions\IRuleActionRunner.cs" />
+    <Compile Include="Rules\Actions\LightRuleActionRunner.cs" />
     <Compile Include="Rules\Processors\DayRuleProcessor.cs" />
+    <Compile Include="Rules\Processors\IRuleProcessor.cs" />
     <Compile Include="Stores\DeviceStore.cs" />
     <Compile Include="HomeStates\HomeStateManager.cs" />
     <Compile Include="Rules\Processors\BaseRuleProcessor.cs" />
@@ -95,7 +100,7 @@
     <Compile Include="Rules\Processors\TimeRuleProcessor.cs" />
     <Compile Include="Rules\Processors\UserRuleProcessor.cs" />
     <Compile Include="Rules\RuleRunner.cs" />
-    <Compile Include="Rules\RulesEngine.cs" />
+    <Compile Include="Rules\RulesProcessorEngine.cs" />
     <Compile Include="Rules\RulesManager.cs" />
     <Compile Include="Stores\RuleStore.cs" />
     <Compile Include="Stores\SceneStore.cs" />
@@ -122,6 +127,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

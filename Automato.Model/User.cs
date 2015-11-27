@@ -32,5 +32,15 @@ namespace Automato.Model
         /// or could possibly override manually.
         /// </summary>
         public bool IsHome { get; set; }
+
+        /// <summary>
+        /// Email address of this user we can send to
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// An email address that we can use to send text messages to this user
+        /// </summary>
+        public string TextAddress { get; set; }
     }
 }

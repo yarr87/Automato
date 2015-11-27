@@ -75,13 +75,16 @@
     <Compile Include="HomeStates\UserState.cs" />
     <Compile Include="JsonSubclassConverter.cs" />
     <Compile Include="Messages\UserPresenceUpdate.cs" />
+    <Compile Include="Rules\Actions\BaseRuleAction.cs" />
+    <Compile Include="Rules\Actions\EmailAsTextRuleAction.cs" />
+    <Compile Include="Rules\Actions\IRuleAction.cs" />
+    <Compile Include="Rules\Actions\LightRuleAction.cs" />
+    <Compile Include="Rules\Actions\RuleActionType.cs" />
     <Compile Include="Rules\BaseRuleDefinition.cs" />
     <Compile Include="Rules\DayRule.cs" />
     <Compile Include="Rules\IRuleDefinition.cs" />
-    <Compile Include="Rules\IRuleProcessor.cs" />
     <Compile Include="Rules\LightRule.cs" />
     <Compile Include="Rules\Rule.cs" />
-    <Compile Include="Rules\RuleAction.cs" />
     <Compile Include="Rules\RuleType.cs" />
     <Compile Include="Rules\TimeRule.cs" />
     <Compile Include="Rules\UserRule.cs" />
@@ -95,6 +98,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
