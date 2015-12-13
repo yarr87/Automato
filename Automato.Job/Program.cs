@@ -24,50 +24,12 @@ namespace Automato.Job
     {
         static void Main(string[] args)
         {
-            ////using (var smtp = new SmtpClient("smtp.gmail.com", 587))
-            ////{
-            //    try
-            //    {
-            //        var smtp = new SmtpClient
-            //        {
-            //            Host = "smtp.gmail.com",
-            //            Port = 587,
-            //            EnableSsl = true,
-            //            DeliveryMethod = SmtpDeliveryMethod.Network,
-            //            Credentials = new NetworkCredential("rosenberg19fitz@gmail.com", "Th3Hous419*Fi84#"),
-            //            Timeout = 3000
-            //        };
-
-            //        //smtp.UseDefaultCredentials = false;
-
-            //        var msg = new MailMessage("rosenberg19fitz@gmail.com", "6173127854@text.republicwireless.com");
-            //        msg.Body = "testing";
-
-            //        smtp.Send(msg);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        var x = ex.Message;
-            //    }
-            ////}
-
-            //return;
-
             var url = ConfigurationManager.AppSettings["OpenHab.WebSocketUrl"];
-
-            //var updates = new List<DeviceState>()
-            //{
-            //    new DeviceState() { InternalName = "blah" },
-            //    new DeviceState() { InternalName = "Z_test", State = "ON" }
-            //};
-
-            //var a = new RulesManager().ProcessDeviceStateUpdates(updates);
-            //a.Wait();
 
             var userPresenceDetector = new UserPresenceDetector();
 
             userPresenceDetector.Start();
-            
+
 
             var listener = new OpenHabListener();
             listener.Initialize(url);

@@ -1,6 +1,7 @@
 ﻿using Automato.Integration.Model;
 using Automato.Model;
 using Automato.Model.Messages;
+using log4net;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace Automato.Job
 {
     public class ApiClient
     {
+        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Send a list of device statuses to the api.  Usually this will be one at a time in response to an openhab
         /// server push after a switch is updated.
@@ -32,13 +35,14 @@ namespace Automato.Job
 
                 try
                 {
-                    Console.WriteLine("Posting content to " + client.BaseAddress + "api/devicestates");
-                    Console.WriteLine(content);
+                    Logger.DebugFormat("Posting content to {0}api/devicestates", client.BaseAddress);
+                    Logger.Debug(content);
+                    
                     await client.PostAsync("api/devicestates", new StringContent(content, Encoding.UTF8, "application/json"));
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Logger.Error(ex);
                 }
             }
         }
@@ -63,13 +67,14 @@ namespace Automato.Job
 
                 try
                 {
-                    Console.WriteLine("Posting content to " + client.BaseAddress + "api/users/status");
-                    Console.WriteLine(content);
+                    Logger.DebugFormat("Posting content to {0}api/users/status", client.BaseAddress);
+                    Logger.Debug(content);
+
                     await client.PostAsync("api/users/presence", new StringContent(content, Encoding.UTF8, "application/json"));
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Logger.Error(ex);
                 }
             }
         }

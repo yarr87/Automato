@@ -1,6 +1,7 @@
 ﻿using Automato.Integration.Model;
 using Automato.Integration.Router;
 using Automato.Logic;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Automato.Job
     {
         private TimeSpan timeSpan = TimeSpan.FromSeconds(30);
         private Timer _timer;
+        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Local cache of devices, from the last time loaded
@@ -25,6 +27,7 @@ namespace Automato.Job
 
         public void Start()
         {
+            Logger.Debug("Starting up user presence detector");
             _timer = new Timer(new TimerCallback(DoWork), null, TimeSpan.Zero, timeSpan);
         }
 
@@ -34,12 +37,19 @@ namespace Automato.Job
         }
 
         private async Task DoWorkAsync()
-        {        
-            using (var router = new RouterApi())
+        {
+            try
             {
-                var devices = await new RouterApi().GetNetworkDevices();
+                using (var router = new RouterApi())
+                {
+                    var devices = await new RouterApi().GetNetworkDevices();
 
-                await OnDevicesLoaded(devices);
+                    await OnDevicesLoaded(devices);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error processing user presence", ex);
             }
         }
 

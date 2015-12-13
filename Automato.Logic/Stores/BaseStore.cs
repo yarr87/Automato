@@ -8,7 +8,13 @@ namespace Automato.Logic.Stores
 {
     public abstract class BaseStore<T>
     {
-        protected virtual Func<T, string> SortExpr { get; }
+        protected virtual Func<T, string> SortExpr
+        {
+            get
+            {
+                return null;
+            }
+        }
 
         public virtual IEnumerable<T> GetAll()
         {

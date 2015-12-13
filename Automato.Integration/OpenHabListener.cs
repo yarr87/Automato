@@ -1,4 +1,5 @@
 ﻿using Automato.Model;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +18,8 @@ namespace Automato.Integration
     {
         public Action<IEnumerable<DeviceState>> MessageReceived { get; set; }
 
+        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private WebSocket _webSocket;
 
         public void Initialize(string webSocketUrl)
@@ -34,7 +37,7 @@ namespace Automato.Integration
             {
                 try
                 {
-                    Console.WriteLine("Message: " + e.Data);
+                    Logger.DebugFormat("Received message: {0}", e.Data);
 
                     var updates = ProcessMessage(e.Data);
 
@@ -46,13 +49,18 @@ namespace Automato.Integration
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Logger.Error("Error processing message", ex);
                 }
             };
 
             _webSocket.OnError += (sender, e) =>
             {
-                Console.WriteLine("Error on websocket connection: " + e.Message);
+                Logger.Error("Error on websocket connection", e.Exception);
+            };
+
+            _webSocket.OnClose += (sender, e) =>
+            {
+                Logger.Error("Websocket connection closed, reason: " + e.Reason);
             };
 
             _webSocket.Connect();
