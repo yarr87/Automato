@@ -17,13 +17,18 @@ namespace Automato.Model.Rules
         }
 
         /// <summary>
+        /// Type of time rule that is defined (ex: at a specific time, or between two times)
+        /// </summary>
+        public TimeRuleType TimeRuleType { get; set; }
+
+        /// <summary>
         /// Start time of the trigger.  For point-in-time rules, Start == End.  For "After x" rules, starttime = x.
         /// For "before x" rules, Start = midnight
         /// </summary>
         public TimeSpan Start { get; set; }
 
         /// <summary>
-        /// End time of the trigger.  For point-in-time rules, Start = End.  For "After x" rules, endtime = 11:59pm.
+        /// End time of the trigger.  For point-in-time rules, Start = End.  For "After x" rules, endtime = midnight.
         /// For "before x" rules, end = x
         /// </summary>
         public TimeSpan End { get; set; }

@@ -19,7 +19,7 @@ namespace Automato.Logic.Rules.Processors
             var currentTime = state.Time.TimeOfDay;
 
             // Point in time rule
-            if (rule.Start == rule.End)
+            if (rule.TimeRuleType == TimeRuleType.PointInTime)
             {
                 // We need to have a window of time so a point in time doesn't trigger much later.  For example a rule is "at 6pm if Jeff is home, turn on a light", but
                 // I get home at 8pm.  It shouldn't trigger that rule.  The 5 minutes should be less than or equal to the frequency we run the rules via job.
@@ -28,7 +28,15 @@ namespace Automato.Logic.Rules.Processors
                 return rule.Start <= currentTime && endOfWindow >= currentTime;
             }
             // Range rule
-            else
+            else if (rule.TimeRuleType == TimeRuleType.After)
+            {
+                return rule.Start < currentTime;
+            }
+            else if (rule.TimeRuleType == TimeRuleType.Before)
+            {
+                return rule.End > currentTime;
+            }
+            else // Between
             {
                 // Single-day range
                 if (rule.Start < rule.End)

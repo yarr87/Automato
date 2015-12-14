@@ -87,6 +87,7 @@
     <Compile Include="Rules\Rule.cs" />
     <Compile Include="Rules\RuleType.cs" />
     <Compile Include="Rules\TimeRule.cs" />
+    <Compile Include="Rules\TimeRuleType.cs" />
     <Compile Include="Rules\UserRule.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="SceneDevice.cs" />
