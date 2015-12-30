@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Xml.Linq;
 using WebSocketSharp;
 
@@ -21,6 +23,8 @@ namespace Automato.Integration
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private WebSocket _webSocket;
+
+        private System.Threading.Timer _pinger;
 
         public void Initialize(string webSocketUrl)
         {
@@ -61,9 +65,13 @@ namespace Automato.Integration
             _webSocket.OnClose += (sender, e) =>
             {
                 Logger.Error("Websocket connection closed, reason: " + e.Reason);
+                _webSocket.Connect();
             };
 
             _webSocket.Connect();
+
+            // Ping the websocket every few minutes so it doesn't disconnect
+            _pinger = new System.Threading.Timer(new TimerCallback(Ping), null, TimeSpan.Zero, TimeSpan.FromMinutes(4));
         }
 
         private IEnumerable<DeviceState> ProcessMessage(string message)
@@ -89,6 +97,12 @@ namespace Automato.Integration
             }
 
             return null;
+        }
+
+        private void Ping(object state)
+        {
+            Logger.Debug("Pinging openhab...");
+            _webSocket.Ping();
         }
 
         public void Dispose()

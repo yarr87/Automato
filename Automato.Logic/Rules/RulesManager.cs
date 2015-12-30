@@ -69,7 +69,9 @@ namespace Automato.Logic.Rules
                 if (user == null) continue;
 
                 var matchingRules = rules.Where(r => r.RuleDefinitions.GetUserRules()
-                                                            .Any(ur => ur.UserState.UserId == user.Id && ur.IsTriggered));
+                                                            .Any(ur => (ur.UserState.UserId == user.Id ||
+                                                                        ur.UserState.UserId == Constants.UserIds.Anyone)
+                                                                        && ur.IsTriggered));
 
                 var userState = new UserState() { UserId = user.Id, IsHome = userUpdate.IsHome };
 

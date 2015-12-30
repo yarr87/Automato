@@ -1,4 +1,5 @@
-﻿using Automato.Model.Rules;
+﻿using Automato.Model;
+using Automato.Model.Rules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,23 @@ namespace Automato.Logic.Rules.Processors
     {
         public override bool IsRuleActive(UserRule rule, Model.HomeStates.HomeState state)
         {
-            var user = state.Users.FirstOrDefault(u => u.UserId == rule.UserState.UserId);
+            // "Anyone is home"
+            if (rule.UserState.UserId == Constants.UserIds.Anyone)
+            {
+                return state.Users.Any(u => u.IsHome == rule.UserState.IsHome);
+            }
+            // "No one is home"
+            else if (rule.UserState.UserId == Constants.UserIds.NoOne)
+            {
+                return !state.Users.Any(u => u.IsHome == rule.UserState.IsHome);
+            }
+            // "Jeff is home"
+            else
+            {
+                var user = state.Users.FirstOrDefault(u => u.UserId == rule.UserState.UserId);
 
-            return user != null && user.IsHome == rule.UserState.IsHome;
+                return user != null && user.IsHome == rule.UserState.IsHome;
+            }
         }
     }
 }
