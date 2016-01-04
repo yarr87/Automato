@@ -1,4 +1,5 @@
 ﻿using Automato.Integration;
+using Automato.Logic;
 using Automato.Logic.Rules;
 using Automato.Model;
 using Automato.Web.Hubs;
@@ -51,6 +52,8 @@ namespace Automato.Web.Controllers
             DeviceStateHub.Value.Clients.All.broadcastStateUpdates(updates);
 
             await new RulesManager().ProcessDeviceStateUpdates(updates);
+
+            new DeviceStore().ProcessStateUpdates(updates);
 
             return Ok();
         }

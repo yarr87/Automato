@@ -19,6 +19,8 @@ namespace Automato.Model.Rules
 
         public string Description { get; set; }
 
+        public bool IsDisabled { get; set; }
+
         public IEnumerable<BaseRuleDefinition> RuleDefinitions { get; set; }
 
         public IEnumerable<BaseRuleAction> Actions { get; set; }

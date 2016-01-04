@@ -30,7 +30,7 @@ namespace Automato.Logic.Rules
         public async Task ProcessDeviceStateUpdates(IEnumerable<DeviceState> deviceStates)
         {
             var homeState = await _homeStateManager.GetCurrentHomeState();
-            var rules = new RuleStore().GetAll();
+            var rules = new RuleStore().GetActive();
 
             foreach (var deviceState in deviceStates)
             {
@@ -60,7 +60,7 @@ namespace Automato.Logic.Rules
             var homeState = await _homeStateManager.GetCurrentHomeState();
 
             var users = new UserStore().GetAll();
-            var rules = new RuleStore().GetAll();
+            var rules = new RuleStore().GetActive();
 
             foreach (var userUpdate in userUpdates)
             {

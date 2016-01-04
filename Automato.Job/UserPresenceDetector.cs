@@ -4,6 +4,7 @@ using Automato.Logic;
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -23,7 +24,7 @@ namespace Automato.Job
         /// <summary>
         /// Time that a device must be disconnected to consider the user no longer home.
         /// </summary>
-        private TimeSpan TimeToConsiderActuallyGone = TimeSpan.FromMinutes(4);
+        private TimeSpan TimeToConsiderActuallyGone;
 
         /// <summary>
         /// Local cache of devices, from the last time loaded
@@ -39,6 +40,9 @@ namespace Automato.Job
         public void Start()
         {
             Logger.Debug("Starting up user presence detector");
+
+            TimeToConsiderActuallyGone = TimeSpan.FromMinutes(Int32.Parse(ConfigurationManager.AppSettings["MinutesToConsiderActuallyGone"]));
+
             _timer = new Timer(new TimerCallback(DoWork), null, TimeSpan.Zero, timeSpan);
         }
 

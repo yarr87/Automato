@@ -35,6 +35,11 @@ namespace Automato.Model
         public List<DeviceTag> Tags { get; set; }
 
         /// <summary>
+        /// Time this device last updated (light turned on/off/etc)
+        /// </summary>
+        public DateTime? LastStateChange { get; set; }
+
+        /// <summary>
         /// Not in the database, loaded directly from device
         /// </summary>
         [NotMapped]

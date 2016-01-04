@@ -81,6 +81,7 @@
     <Compile Include="Rules\Actions\IRuleAction.cs" />
     <Compile Include="Rules\Actions\LightRuleAction.cs" />
     <Compile Include="Rules\Actions\RuleActionType.cs" />
+    <Compile Include="Rules\Actions\TemperatureRuleAction.cs" />
     <Compile Include="Rules\BaseRuleDefinition.cs" />
     <Compile Include="Rules\DayRule.cs" />
     <Compile Include="Rules\IRuleDefinition.cs" />

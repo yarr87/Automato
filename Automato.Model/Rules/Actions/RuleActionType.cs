@@ -24,7 +24,12 @@ namespace Automato.Model.Rules.Actions
         /// <summary>
         /// Send an email that will be delivered as a text message
         /// </summary>
-        EmailAsText
+        EmailAsText,
+
+        /// <summary>
+        /// Change the thermostat temperature
+        /// </summary>
+        Temperature
 
         // Other ideas
         // flicker a light on and off

@@ -91,6 +91,7 @@
     <Compile Include="Rules\Actions\EmailAsTextRuleActionRunner.cs" />
     <Compile Include="Rules\Actions\IRuleActionRunner.cs" />
     <Compile Include="Rules\Actions\LightRuleActionRunner.cs" />
+    <Compile Include="Rules\Actions\TemperatureRuleActionRunner.cs" />
     <Compile Include="Rules\Processors\DayRuleProcessor.cs" />
     <Compile Include="Rules\Processors\IRuleProcessor.cs" />
     <Compile Include="Stores\DeviceStore.cs" />

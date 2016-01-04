@@ -18,7 +18,8 @@ namespace Automato.Logic.Rules
         private Dictionary<RuleActionType, IRuleActionRunner> _actionRunners = new Dictionary<RuleActionType, IRuleActionRunner>()
         {
             { RuleActionType.Light, new LightRuleActionRunner() },
-            { RuleActionType.EmailAsText, new EmailAsTextRuleActionRunner() }
+            { RuleActionType.EmailAsText, new EmailAsTextRuleActionRunner() },
+            { RuleActionType.Temperature, new TemperatureRuleActionRunner() }
         };
 
         public async Task RunRule(Rule rule)

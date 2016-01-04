@@ -17,6 +17,13 @@ namespace Automato.Logic.Stores
             }
         }
 
+        public IEnumerable<Rule> GetActive()
+        {
+            var rules = GetAll();
+
+            return rules.Where(r => !r.IsDisabled);
+        }
+
         public void Save(Rule rule)
         {
             using (var session = Context.DocumentStore.Value.OpenSession())
@@ -38,6 +45,7 @@ namespace Automato.Logic.Stores
                     {
                         existingRule.Name = rule.Name;
                         existingRule.Description = rule.Description;
+                        existingRule.IsDisabled = rule.IsDisabled;
                         existingRule.Actions = rule.Actions;
                         existingRule.RuleDefinitions = rule.RuleDefinitions;
                     }

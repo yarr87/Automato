@@ -9,6 +9,7 @@ namespace Automato.Model
     public enum DeviceType
     {
         LightSwitch,
-        Dimmer
+        Dimmer,
+        Temperature
     }
 }

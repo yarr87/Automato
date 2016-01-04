@@ -89,6 +89,26 @@ namespace Automato.Logic
             }
         }
 
+        public void ProcessStateUpdates(IEnumerable<DeviceState> states)
+        {
+            using (var session = Context.DocumentStore.Value.OpenSession())
+            {
+                var devices = session.Query<Device>().ToList();
+
+                foreach (var state in states)
+                {
+                    var device = devices.FirstOrDefault(d => d.InternalName == state.InternalName);
+
+                    if (device != null)
+                    {
+                        device.LastStateChange = DateTime.Now;
+                    }
+                }
+
+                session.SaveChanges();
+            }
+        }
+
         private List<DeviceTag> GetParentTags(DeviceTag deviceTag, List<Tag> allTags)
         {
             var parentTags = new List<DeviceTag>();

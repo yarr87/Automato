@@ -32,9 +32,13 @@ namespace Automato.Model.Rules.Actions
                 {
                     return new EmailAsTextRuleAction();
                 }
+                else if (ruleAction == "Temperature")
+                {
+                    return new TemperatureRuleAction();
+                }
                 else
                 {
-                    throw new Exception("Unrecognized rule actino " + ruleAction);
+                    throw new Exception("Unrecognized rule action " + ruleAction);
                 }
             }
         }

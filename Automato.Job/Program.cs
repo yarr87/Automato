@@ -27,9 +27,9 @@ namespace Automato.Job
             var url = ConfigurationManager.AppSettings["OpenHab.WebSocketUrl"];
 
             var userPresenceDetector = new UserPresenceDetector();
-
             userPresenceDetector.Start();
 
+            new RuleDetector().Start();
 
             var listener = new OpenHabListener();
             listener.Initialize(url);

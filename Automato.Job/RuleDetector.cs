@@ -6,6 +6,7 @@ using Automato.Model.Rules;
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -21,7 +22,7 @@ namespace Automato.Job
         /// <summary>
         /// How often we check for new rules
         /// </summary>
-        private TimeSpan timeSpan = TimeSpan.FromMinutes(5);
+        private TimeSpan timeSpan;
 
         private Timer _timer;
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -32,6 +33,9 @@ namespace Automato.Job
         public void Start()
         {
             Logger.Debug("Starting up rule detector");
+
+            timeSpan = TimeSpan.FromSeconds(Int32.Parse(ConfigurationManager.AppSettings["RuleCheckFrequencyInSeconds"]));
+
             _timer = new Timer(new TimerCallback(DoWork), null, TimeSpan.Zero, timeSpan);
         }
 
@@ -49,7 +53,7 @@ namespace Automato.Job
 
                 if (_previousHomeState != null)
                 {
-                    var rules = new RuleStore().GetAll();
+                    var rules = new RuleStore().GetActive();
 
                     // Only include rules without triggers.  Those rules will be run when that triggered action happens.
                     // Ex: we don't want to run "When Jeff comes home after 6pm" here.  We do want to run "When Jeff is home after 6pm"
@@ -73,6 +77,8 @@ namespace Automato.Job
 
             foreach (var rule in rules)
             {
+                Logger.DebugFormat("Running rule {0}", rule.Name);
+
                 await ruleRunner.RunRule(rule);
             }
         }
