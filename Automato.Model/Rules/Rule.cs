@@ -11,7 +11,7 @@ namespace Automato.Model.Rules
     /// A rule is a combination of rule definitions and a corresponding actions to take if they are active.
     /// This object is saved to the database.
     /// </summary>
-    public class Rule
+    public class Rule : IActionable
     {
         public string Id { get; set; }
 

@@ -22,9 +22,9 @@ namespace Automato.Logic.Rules
             { RuleActionType.Temperature, new TemperatureRuleActionRunner() }
         };
 
-        public async Task RunRule(Rule rule)
+        public async Task RunRule(IActionable actionable)
         {
-            foreach (var action in rule.Actions)
+            foreach (var action in actionable.Actions)
             {
                 var runner = _actionRunners[action.ActionType];
 

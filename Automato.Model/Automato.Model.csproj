@@ -84,6 +84,7 @@
     <Compile Include="Rules\Actions\TemperatureRuleAction.cs" />
     <Compile Include="Rules\BaseRuleDefinition.cs" />
     <Compile Include="Rules\DayRule.cs" />
+    <Compile Include="Rules\IActionable.cs" />
     <Compile Include="Rules\IRuleDefinition.cs" />
     <Compile Include="Rules\LightRule.cs" />
     <Compile Include="Rules\Rule.cs" />
@@ -92,10 +93,11 @@
     <Compile Include="Rules\TimeRuleType.cs" />
     <Compile Include="Rules\UserRule.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="SceneDevice.cs" />
+    <Compile Include="SceneTrigger.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="DeviceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Thermostat.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>

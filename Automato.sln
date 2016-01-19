@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automato.Integration", "Aut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automato.Job", "Automato.Job\Automato.Job.csproj", "{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automato.Config", "Automato.Config\Automato.Config.csproj", "{4AED4550-FED1-47FD-8793-05B6C012B1F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,16 @@ Global
 		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DC1AC761-D1EA-4B5A-BA0A-A934CF9A72C7}.Release|x86.ActiveCfg = Release|Any CPU
+		{4AED4550-FED1-47FD-8793-05B6C012B1F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AED4550-FED1-47FD-8793-05B6C012B1F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AED4550-FED1-47FD-8793-05B6C012B1F8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4AED4550-FED1-47FD-8793-05B6C012B1F8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4AED4550-FED1-47FD-8793-05B6C012B1F8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4AED4550-FED1-47FD-8793-05B6C012B1F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AED4550-FED1-47FD-8793-05B6C012B1F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AED4550-FED1-47FD-8793-05B6C012B1F8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4AED4550-FED1-47FD-8793-05B6C012B1F8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4AED4550-FED1-47FD-8793-05B6C012B1F8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

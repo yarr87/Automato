@@ -1,4 +1,5 @@
-﻿using Automato.Model;
+﻿using Automato.Logic.Stores;
+using Automato.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,49 +8,55 @@ using System.Threading.Tasks;
 
 namespace Automato.Logic
 {
-    public class SceneStore
+    public class SceneStore : BaseStore<Scene>
     {
-        public IEnumerable<Scene> GetScenes()
+        protected override Func<Scene, string> SortExpr
         {
-            return Enumerable.Empty<Scene>();
+            get
+            {
+                return (r) => r.Name;
+            }
+        }
 
-            //using (var db = new TomatoContext())
-            //{
-            //    var scenes = (from scene in db.Scenes
-            //                  let sceneDevices = from sceneDevice in db.SceneDevices
-            //                                     join device in db.Devices on sceneDevice.DeviceId equals device.Id
-            //                                     where sceneDevice.SceneId == scene.Id
-            //                                     select new
-            //                                     {
-            //                                         device = device,
-            //                                         sceneDevice = sceneDevice
-            //                                     }
-            //                  select new
-            //                  {
-            //                      scene = scene,
-            //                      sceneDevices = sceneDevices
-            //                  }).ToList();
+        public Scene GetById(string id)
+        {
+            using (var session = Context.DocumentStore.Value.OpenSession())
+            {
+                return session.Load<Scene>(id);
+            }
+        }
 
-            //    var allScenes = scenes.Select(s =>
-            //    {
-            //        var scene = s.scene;
-            //        scene.Devices = new List<SceneDevice>();
+        public void Save(Scene scene)
+        {
+            using (var session = Context.DocumentStore.Value.OpenSession())
+            {
+                // Client sends empty string for new devices (null breaks stuff), but we need to send null to the db
+                // to generate the correct id
+                if (string.IsNullOrWhiteSpace(scene.Id))
+                {
+                    scene.Id = null;
 
-            //        foreach (var deviceWrapper in s.sceneDevices)
-            //        {
-            //            var sceneDevice = deviceWrapper.sceneDevice;
-            //            sceneDevice.Name = deviceWrapper.device.Name;
-            //            sceneDevice.InternalName = deviceWrapper.device.InternalName;
-            //            sceneDevice.Type = deviceWrapper.device.Type;
+                    session.Store(scene);
+                }
+                else
+                {
+                    // Don't overwrite existing stats on save
+                    var existingScene = session.Load<Scene>(scene.Id);
 
-            //            scene.Devices.Add(sceneDevice);
-            //        }
+                    if (existingScene != null)
+                    {
+                        existingScene.Name = scene.Name;
+                        existingScene.Description = scene.Description;
+                        existingScene.Actions = scene.Actions;
+                    }
+                    else
+                    {
+                        throw new Exception(string.Format("Saving scene with id {0} but that id wasn't found in the database", scene.Id));
+                    }
+                }
 
-            //        return scene;
-            //    }).ToList();
-
-            //    return allScenes;
-            //}
+                session.SaveChanges();
+            }
         }
     }
 }

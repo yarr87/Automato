@@ -44,7 +44,8 @@ namespace Automato.Logic
 
         private IEnumerable<Device> GetDevicesWithoutState()
         {
-            return GetAll();
+            // Don't include sub-types, which are owned by a parent device.  Compound devices (such as thermostat) will be managed by their own apis
+            return GetAll().Where(d => d.Type != DeviceType.SubItem);
         }
 
         public Device GetDeviceById(int id)

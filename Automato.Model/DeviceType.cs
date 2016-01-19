@@ -8,8 +8,14 @@ namespace Automato.Model
 {
     public enum DeviceType
     {
+        /// <summary>
+        /// Indicates this device is part of a group (ie, thermostat), and won't show in the device list
+        /// </summary>
+        SubItem,
+
         LightSwitch,
         Dimmer,
         Temperature
+
     }
 }
