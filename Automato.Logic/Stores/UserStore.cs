@@ -40,39 +40,5 @@ namespace Automato.Logic
                 session.SaveChanges();
             }            
         }
-
-        public void AddOrEditUser(User user)
-        {
-            using (var session = Context.DocumentStore.Value.OpenSession())
-            {
-                // Client sends empty string for new devices (null breaks stuff), but we need to send null to the db
-                // to generate the correct id
-                if (string.IsNullOrWhiteSpace(user.Id))
-                {
-                    user.Id = null;
-
-                    session.Store(user);
-                }
-                else
-                {
-                    // Don't overwrite existing presence on save
-                    var existingUser = session.Load<User>(user.Id);
-
-                    if (existingUser != null)
-                    {
-                        existingUser.Name = user.Name;
-                        existingUser.DeviceMac = user.DeviceMac;
-                        existingUser.Email = user.Email;
-                        existingUser.TextAddress = user.TextAddress;
-                    }
-                    else
-                    {
-                        throw new Exception(string.Format("Saving user with id {0} but that id wasn't found in the database", user.Id));
-                    }
-                }
-
-                session.SaveChanges();
-            }
-        }        
     }
 }

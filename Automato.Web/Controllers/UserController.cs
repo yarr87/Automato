@@ -28,7 +28,7 @@ namespace Automato.Web.Controllers
         public IHttpActionResult SaveUser(User user)
         {
             var userStore = new UserStore();
-            userStore.AddOrEditUser(user);
+            userStore.Save(user);
             return Ok(user);
         }
 

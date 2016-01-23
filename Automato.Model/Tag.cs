@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Automato.Model
 {
-    public class Tag
+    public class Tag : ICopyable<Tag>
     {
         public string Id { get; set; }
 
@@ -30,6 +30,11 @@ namespace Automato.Model
         {
             this.Name = tag.Name;
             this.ParentId = tag.ParentId;
+        }
+
+        public void CopyTo(Tag destination)
+        {
+            throw new NotImplementedException();
         }
     }
 }

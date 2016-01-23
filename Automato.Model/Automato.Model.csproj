@@ -74,6 +74,8 @@
     <Compile Include="HomeStates\HomeState.cs" />
     <Compile Include="HomeStates\LightState.cs" />
     <Compile Include="HomeStates\UserState.cs" />
+    <Compile Include="ICopyable.cs" />
+    <Compile Include="IEntity.cs" />
     <Compile Include="JsonSubclassConverter.cs" />
     <Compile Include="Messages\UserPresenceUpdate.cs" />
     <Compile Include="Rules\Actions\BaseRuleAction.cs" />

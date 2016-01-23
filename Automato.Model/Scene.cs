@@ -12,7 +12,7 @@ namespace Automato.Model
     /// A scene is a group of actions that are taken by a single trigger.  That trigger will be from an api url, hit from the scenes
     /// page or could be configured from a remote button.
     /// </summary>
-    public class Scene : IActionable
+    public class Scene : IActionable, ICopyable<Scene>
     {
         public string Id { get; set; }
 
@@ -21,5 +21,12 @@ namespace Automato.Model
         public string Description { get; set; }
 
         public IEnumerable<BaseRuleAction> Actions { get; set; }
+
+        public void CopyTo(Scene destination)
+        {
+            destination.Name = this.Name;
+            destination.Description = this.Description;
+            destination.Actions = this.Actions;
+        }
     }
 }

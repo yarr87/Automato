@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Automato.Model
 {
-    public class Device
+    public class Device : ICopyable<Device>
     {
         /// <summary>
         /// Auto-gen id
@@ -53,5 +53,10 @@ namespace Automato.Model
         //    this.Type = device.Type;
         //    this.Tags = device.Tags;
         //}
+
+        public void CopyTo(Device destination)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

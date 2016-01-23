@@ -9,7 +9,7 @@ namespace Automato.Model
     /// <summary>
     /// Represents a user whose presence can be known
     /// </summary>
-    public class User
+    public class User : ICopyable<User>
     {
         /// <summary>
         /// Auto-gen id
@@ -42,5 +42,13 @@ namespace Automato.Model
         /// An email address that we can use to send text messages to this user
         /// </summary>
         public string TextAddress { get; set; }
+
+        public void CopyTo(User destination)
+        {
+            destination.Name = this.Name;
+            destination.DeviceMac = this.DeviceMac;
+            destination.Email = this.Email;
+            destination.TextAddress = this.TextAddress;
+        }
     }
 }
