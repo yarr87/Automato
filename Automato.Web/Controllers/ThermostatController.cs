@@ -17,9 +17,9 @@ namespace Automato.Web.Controllers
     {
         [HttpGet]
         [Route("api/thermostats")]
-        public IHttpActionResult GetThermostats()
+        public async Task<IHttpActionResult> GetThermostats()
         {
-            var thermostats = new ThermostatStore().GetAll();
+            var thermostats = await new ThermostatStore().GetAllWithState();
             return Ok(thermostats);
         }
 

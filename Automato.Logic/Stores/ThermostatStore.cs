@@ -1,4 +1,5 @@
-﻿using Automato.Model;
+﻿using Automato.Integration;
+using Automato.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,29 @@ namespace Automato.Logic.Stores
             {
                 return (r) => r.Name;
             }
+        }
+
+        public async Task<IEnumerable<Thermostat>> GetAllWithState()
+        {
+            var thermostats = base.GetAll();
+
+            // Add current state info
+            var states = await new OpenHabRestService().GetDeviceStates();
+
+            foreach (var thermostat in thermostats)
+            {
+                thermostat.Battery.State = states.Where(s => s.InternalName == thermostat.Battery.InternalName).Select(s => s.State).FirstOrDefault();
+                thermostat.CoolSetPoint.State = states.Where(s => s.InternalName == thermostat.CoolSetPoint.InternalName).Select(s => s.State).FirstOrDefault();
+                thermostat.FanMode.State = states.Where(s => s.InternalName == thermostat.FanMode.InternalName).Select(s => s.State).FirstOrDefault();
+                thermostat.FanState.State = states.Where(s => s.InternalName == thermostat.FanState.InternalName).Select(s => s.State).FirstOrDefault();
+                thermostat.HeatSetPoint.State = states.Where(s => s.InternalName == thermostat.HeatSetPoint.InternalName).Select(s => s.State).FirstOrDefault();
+                thermostat.Humidity.State = states.Where(s => s.InternalName == thermostat.Humidity.InternalName).Select(s => s.State).FirstOrDefault();
+                thermostat.Mode.State = states.Where(s => s.InternalName == thermostat.Mode.InternalName).Select(s => s.State).FirstOrDefault();
+                thermostat.OperatingState.State = states.Where(s => s.InternalName == thermostat.OperatingState.InternalName).Select(s => s.State).FirstOrDefault();
+                thermostat.Temperature.State = states.Where(s => s.InternalName == thermostat.Temperature.InternalName).Select(s => s.State).FirstOrDefault();
+            }
+
+            return thermostats;
         }
 
         public override void OnBeforeSave(Thermostat entity)
