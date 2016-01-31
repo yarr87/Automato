@@ -39,6 +39,10 @@ namespace Automato.Model.Rules
                 {
                     return new TimeRule();
                 }
+                else if (ruleType == "Day")
+                {
+                    return new DayRule();
+                }
                 else
                 {
                     throw new Exception("Unrecognized rule type " + ruleType);

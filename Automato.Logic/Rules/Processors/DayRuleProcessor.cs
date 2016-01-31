@@ -15,7 +15,7 @@ namespace Automato.Logic.Rules.Processors
     {
         public override bool IsRuleActive(DayRule rule, HomeState state)
         {
-            throw new NotImplementedException();
+            return rule.Days.Contains(state.Time.DayOfWeek);
         }
     }
 }

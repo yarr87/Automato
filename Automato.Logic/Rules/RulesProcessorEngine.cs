@@ -18,7 +18,8 @@ namespace Automato.Logic.Rules
         {
             { RuleType.Light, new LightRuleProcessor() },
             { RuleType.Time, new TimeRuleProcessor() },
-            { RuleType.User, new UserRuleProcessor() }
+            { RuleType.User, new UserRuleProcessor() },
+            { RuleType.Day, new DayRuleProcessor() }
         };
 
         /// <summary>
