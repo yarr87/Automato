@@ -54,14 +54,8 @@ namespace Automato.Logic.Rules
         /// <returns></returns>
         public bool DidRuleChangeToActive(Rule rule, HomeState previousState, HomeState currentState)
         {
-            // TODO: group rules into and/or
-            return rule.RuleDefinitions.All(d => IsRuleDefinitionActive(d, previousState, currentState));
-        }
-        
-        private bool IsRuleDefinitionActive(BaseRuleDefinition ruleDefinition, HomeState previousState, HomeState currentState)
-        {
-            // A rule definition is active if it's active on the current state and wasn't active on the previou state
-            return IsRuleDefinitionActive(ruleDefinition, currentState) && !IsRuleDefinitionActive(ruleDefinition, previousState);
+            // Check if it's fully active with the current state and wasn't on the previous state
+            return rule.RuleDefinitions.All(d => IsRuleDefinitionActive(d, currentState)) && !rule.RuleDefinitions.All(d => IsRuleDefinitionActive(d, previousState));
         }
 
         private bool IsRuleDefinitionActive(BaseRuleDefinition ruleDefinition, HomeState state)
