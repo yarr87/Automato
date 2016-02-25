@@ -29,7 +29,12 @@ namespace Automato.Model.Rules.Actions
         /// <summary>
         /// Change the thermostat temperature
         /// </summary>
-        Temperature
+        Temperature,
+
+        /// <summary>
+        /// Send a sonos command
+        /// </summary>
+        Sonos
 
         // Other ideas
         // flicker a light on and off

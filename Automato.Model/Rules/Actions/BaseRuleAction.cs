@@ -36,6 +36,10 @@ namespace Automato.Model.Rules.Actions
                 {
                     return new TemperatureRuleAction();
                 }
+                else if (ruleAction == "Sonos")
+                {
+                    return new SonosRuleAction();
+                }
                 else
                 {
                     throw new Exception("Unrecognized rule action " + ruleAction);

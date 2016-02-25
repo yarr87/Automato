@@ -285,8 +285,10 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DeviceStateController.cs" />
+    <Compile Include="Controllers\HttpGet.cs" />
     <Compile Include="Controllers\RuleController.cs" />
     <Compile Include="Controllers\SceneController.cs" />
+    <Compile Include="Controllers\SonosController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\DevicesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -319,6 +321,7 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Views\DeviceState\" />
+    <Folder Include="Views\Sonos\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Automato.Integration\Automato.Integration.csproj">

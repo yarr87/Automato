@@ -57,6 +57,7 @@
     <Compile Include="OpenHabRestService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Router\RouterApi.cs" />
+    <Compile Include="SonosHttpService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Automato.Model\Automato.Model.csproj">

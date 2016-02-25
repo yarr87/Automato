@@ -19,7 +19,8 @@ namespace Automato.Logic.Rules
         {
             { RuleActionType.Light, new LightRuleActionRunner() },
             { RuleActionType.EmailAsText, new EmailAsTextRuleActionRunner() },
-            { RuleActionType.Temperature, new TemperatureRuleActionRunner() }
+            { RuleActionType.Temperature, new TemperatureRuleActionRunner() },
+            { RuleActionType.Sonos, new SonosRuleActionRunner() }
         };
 
         public async Task RunRule(IActionable actionable)

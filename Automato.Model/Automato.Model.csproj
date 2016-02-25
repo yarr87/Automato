@@ -83,6 +83,8 @@
     <Compile Include="Rules\Actions\IRuleAction.cs" />
     <Compile Include="Rules\Actions\LightRuleAction.cs" />
     <Compile Include="Rules\Actions\RuleActionType.cs" />
+    <Compile Include="Rules\Actions\SonosActionType.cs" />
+    <Compile Include="Rules\Actions\SonosRuleAction.cs" />
     <Compile Include="Rules\Actions\TemperatureRuleAction.cs" />
     <Compile Include="Rules\BaseRuleDefinition.cs" />
     <Compile Include="Rules\DayRule.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="Rules\UserRule.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="SceneTrigger.cs" />
+    <Compile Include="Sonos.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="DeviceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

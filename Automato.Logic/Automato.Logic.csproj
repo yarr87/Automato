@@ -91,6 +91,7 @@
     <Compile Include="Rules\Actions\EmailAsTextRuleActionRunner.cs" />
     <Compile Include="Rules\Actions\IRuleActionRunner.cs" />
     <Compile Include="Rules\Actions\LightRuleActionRunner.cs" />
+    <Compile Include="Rules\Actions\SonosRuleActionRunner.cs" />
     <Compile Include="Rules\Actions\TemperatureRuleActionRunner.cs" />
     <Compile Include="Rules\Processors\DayRuleProcessor.cs" />
     <Compile Include="Rules\Processors\IRuleProcessor.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Stores\SceneStore.cs" />
     <Compile Include="Stores\BaseStore.cs" />
     <Compile Include="Stores\SceneTriggerStore.cs" />
+    <Compile Include="Stores\SonosStore.cs" />
     <Compile Include="Stores\TagStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stores\ThermostatStore.cs" />
