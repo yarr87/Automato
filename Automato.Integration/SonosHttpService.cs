@@ -111,6 +111,12 @@ namespace Automato.Integration
 
             var content = Encoding.UTF8.GetString(bytes);
 
+            // Errors just return like this, not an actual http error
+            if (content.StartsWith("{\"error\""))
+            {
+                return new List<string>();
+            }
+
             var favorites = JsonConvert.DeserializeObject<IEnumerable<string>>(content);
 
             return favorites;

@@ -17,5 +17,22 @@ namespace Automato.Logic.Stores
                 return (r) => r.Name;
             }
         }
+
+        /// <summary>
+        /// Returns all sonoses with playlists/favorites
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Sonos>> GetAllExtended()
+        {
+            var sonoses = base.GetAll();
+            var sonosService = new SonosHttpService();
+
+            foreach (var sonos in sonoses)
+            {
+                sonos.Favorites = await sonosService.GetFavorites(sonos.Name);
+            }
+
+            return sonoses;
+        }
     }
 }

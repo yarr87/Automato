@@ -15,11 +15,15 @@ namespace Automato.Web.Controllers
 {
     public class SonosController : ApiController
     {
+        /// <summary>
+        /// Returns all sonos devices with playlists/favorites
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/sonos")]
-        public IHttpActionResult GetSonos()
+        public async Task<IHttpActionResult> GetSonos()
         {
-            var sonos = new SonosStore().GetAll();
+            var sonos = await new SonosStore().GetAllExtended();
             return Ok(sonos);
         }
 
