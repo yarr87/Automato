@@ -15,9 +15,7 @@ namespace Automato.Logic.Rules.Actions
     {
         public override async Task ExecuteActionAsync(TemperatureRuleAction action)
         {
-            // This is basically the same as the lights version, but could be updated in the future.  Just trying to get
-            // it working quickly now.
-            await new OpenHabRestService().SendCommand(action.DeviceState.InternalName, action.DeviceState.State);
+            await new TemperatureHandler().SetTemperature(action.ThermostatId, action.Temperature);
         }
     }
 }

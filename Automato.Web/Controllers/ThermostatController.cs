@@ -4,6 +4,7 @@ using Automato.Logic.Rules;
 using Automato.Logic.Stores;
 using Automato.Model;
 using Automato.Model.Messages;
+using Automato.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,15 @@ namespace Automato.Web.Controllers
         public IHttpActionResult DeleteById(string id)
         {
             new ThermostatStore().DeleteById(id);
+
+            return Ok();
+        }
+
+        [Route("api/thermostats/{id}/temperature")]
+        [HttpPost]
+        public async Task<IHttpActionResult> SetThermostatTemp(string id, TemperatureModel model)
+        {
+            await new TemperatureHandler().SetTemperature(id, model.Temperature.ToString());
 
             return Ok();
         }

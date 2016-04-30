@@ -16,6 +16,8 @@ namespace Automato.Model.Rules.Actions
             get { return RuleActionType.Temperature; }
         }
 
-        public DeviceState DeviceState { get; set; }
+        public string ThermostatId { get; set; }
+
+        public string Temperature { get; set; }
     }
 }
