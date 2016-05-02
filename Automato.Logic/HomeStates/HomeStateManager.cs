@@ -1,4 +1,6 @@
-﻿using Automato.Model;
+﻿using Automato.Logic.Stores;
+using Automato.Model;
+using Automato.Model.Extensions;
 using Automato.Model.HomeStates;
 using System;
 using System.Collections.Generic;
@@ -21,10 +23,26 @@ namespace Automato.Logic.HomeStates
             homeState.Time = DateTime.Now;
 
             var lights = await new DeviceStore().GetDevices();
-            homeState.Lights = lights.Select(l => new LightState() { InternalName = l.InternalName, State = l.State });
+            homeState.Lights = lights.Where(l => l.Type == DeviceType.LightSwitch || l.Type == DeviceType.Dimmer)
+                                     .Select(l => new LightState() { InternalName = l.InternalName, State = l.State });
 
             var users = new UserStore().GetAll();
             homeState.Users = users.Select(u => new UserState() { UserId = u.Id, IsHome = u.IsHome });
+
+            var thermostats = await new ThermostatStore().GetAllWithState();
+            homeState.Thermostats = thermostats.Select(t => new ThermostatState()
+                {
+                    ThermostatId = t.Id,
+                    HeatSetPoint = t.HeatSetPoint.State.ToDecimal(),
+                    CoolSetPoint = t.CoolSetPoint.State.ToDecimal(),
+                    Temperature = t.Temperature.State.ToDecimal(),
+                    Humidity = t.Humidity.State.ToDecimal(),
+                    Mode = t.Mode.State.ToInt(),
+                    FanMode = t.FanMode.State.ToInt(),
+                    OperatingState = t.OperatingState.State.ToInt(),
+                    FanState = t.FanState.State.ToInt(),
+                    Battery = t.Battery.State.ToDecimal()
+                });
 
             return homeState;
         }

@@ -71,8 +71,10 @@
     <Compile Include="DeviceState.cs" />
     <Compile Include="DeviceTag.cs" />
     <Compile Include="Extensions\BaseRuleDefinitionExtensions.cs" />
+    <Compile Include="Extensions\ConversionExtensions.cs" />
     <Compile Include="HomeStates\HomeState.cs" />
     <Compile Include="HomeStates\LightState.cs" />
+    <Compile Include="HomeStates\ThermostatState.cs" />
     <Compile Include="HomeStates\UserState.cs" />
     <Compile Include="ICopyable.cs" />
     <Compile Include="IEntity.cs" />

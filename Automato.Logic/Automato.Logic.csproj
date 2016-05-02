@@ -104,6 +104,7 @@
     <Compile Include="Rules\RuleRunner.cs" />
     <Compile Include="Rules\RulesProcessorEngine.cs" />
     <Compile Include="Rules\RulesManager.cs" />
+    <Compile Include="Stores\HomeStateStore.cs" />
     <Compile Include="Stores\RuleStore.cs" />
     <Compile Include="Stores\SceneStore.cs" />
     <Compile Include="Stores\BaseStore.cs" />

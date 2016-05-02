@@ -39,6 +39,9 @@ namespace Automato.Job
                 await new ApiClient().SendStatusUpdates(deviceStates);
             };
 
+            var homeStateLogger = new HomeStateLogger();
+            homeStateLogger.Start();
+
             Console.ReadKey(true);
         }
     }
