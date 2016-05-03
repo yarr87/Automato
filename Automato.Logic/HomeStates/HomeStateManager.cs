@@ -22,12 +22,15 @@ namespace Automato.Logic.HomeStates
 
             homeState.Time = DateTime.Now;
 
+            // NOTE: must convert the collections with .ToList() or the db save fails
+
             var lights = await new DeviceStore().GetDevices();
             homeState.Lights = lights.Where(l => l.Type == DeviceType.LightSwitch || l.Type == DeviceType.Dimmer)
-                                     .Select(l => new LightState() { InternalName = l.InternalName, State = l.State });
+                                     .Select(l => new LightState() { InternalName = l.InternalName, State = l.State })
+                                     .ToList();
 
             var users = new UserStore().GetAll();
-            homeState.Users = users.Select(u => new UserState() { UserId = u.Id, IsHome = u.IsHome });
+            homeState.Users = users.Select(u => new UserState() { UserId = u.Id, IsHome = u.IsHome }).ToList();
 
             var thermostats = await new ThermostatStore().GetAllWithState();
             homeState.Thermostats = thermostats.Select(t => new ThermostatState()
@@ -42,7 +45,8 @@ namespace Automato.Logic.HomeStates
                     OperatingState = t.OperatingState.State.ToInt(),
                     FanState = t.FanState.State.ToInt(),
                     Battery = t.Battery.State.ToDecimal()
-                });
+                })
+                .ToList();
 
             return homeState;
         }
