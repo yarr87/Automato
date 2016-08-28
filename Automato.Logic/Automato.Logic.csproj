@@ -90,6 +90,7 @@
     <Compile Include="Rules\Actions\BaseRuleActionRunner.cs" />
     <Compile Include="Rules\Actions\EmailAsTextRuleActionRunner.cs" />
     <Compile Include="Rules\Actions\IRuleActionRunner.cs" />
+    <Compile Include="Rules\Actions\DelayRuleActionRunner.cs" />
     <Compile Include="Rules\Actions\LightRuleActionRunner.cs" />
     <Compile Include="Rules\Actions\SonosRuleActionRunner.cs" />
     <Compile Include="Rules\Actions\TemperatureRuleActionRunner.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Rules\RuleRunner.cs" />
     <Compile Include="Rules\RulesProcessorEngine.cs" />
     <Compile Include="Rules\RulesManager.cs" />
+    <Compile Include="Stores\DelayedActionStore.cs" />
     <Compile Include="Stores\HomeStateStore.cs" />
     <Compile Include="Stores\RuleStore.cs" />
     <Compile Include="Stores\SceneStore.cs" />

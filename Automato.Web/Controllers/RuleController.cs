@@ -5,6 +5,7 @@ using Automato.Logic.Stores;
 using Automato.Model;
 using Automato.Model.Messages;
 using Automato.Model.Rules;
+using Automato.Model.Rules.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

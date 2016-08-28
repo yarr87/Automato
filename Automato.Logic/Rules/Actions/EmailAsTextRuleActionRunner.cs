@@ -15,7 +15,7 @@ namespace Automato.Logic.Rules.Actions
     /// </summary>
     public class EmailAsTextRuleActionRunner : BaseRuleActionRunner<EmailAsTextRuleAction>
     {
-        public override  async Task ExecuteActionAsync(EmailAsTextRuleAction action)
+        protected override async Task ExecuteActionAsync(EmailAsTextRuleAction action)
         {
             // TODO: GetUserById
             var users = new UserStore().GetAll();

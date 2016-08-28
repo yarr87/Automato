@@ -25,15 +25,34 @@ namespace Automato.Logic.Rules
 
         public async Task RunRule(IActionable actionable)
         {
-            foreach (var action in actionable.Actions)
+            var actions = actionable.Actions;
+
+            while (actions.Any())
             {
+                var action = actions.First();
+                var rest = actions.Skip(1);
+
                 var runner = _actionRunners[action.ActionType];
 
                 if (runner != null)
                 {
-                    await runner.ExecuteActionAsync(action);
+                    actions = await runner.ExecuteActionAsync(action, rest);
+                }
+                else
+                {
+                    actions = rest;
                 }
             }
+
+            //foreach (var action in actionable.Actions)
+            //{
+            //    var runner = _actionRunners[action.ActionType];
+
+            //    if (runner != null)
+            //    {
+            //        await runner.ExecuteActionAsync(action);
+            //    }
+            //}
         }
     }
 }

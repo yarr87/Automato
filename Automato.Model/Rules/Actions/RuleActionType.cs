@@ -12,6 +12,11 @@ namespace Automato.Model.Rules.Actions
     public enum RuleActionType
     {
         /// <summary>
+        /// Wait before executing the rest of the rule actions
+        /// </summary>
+        Delay,
+
+        /// <summary>
         /// Turn a light on or off
         /// </summary>
         Light,

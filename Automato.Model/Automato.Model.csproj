@@ -83,6 +83,7 @@
     <Compile Include="Rules\Actions\BaseRuleAction.cs" />
     <Compile Include="Rules\Actions\EmailAsTextRuleAction.cs" />
     <Compile Include="Rules\Actions\IRuleAction.cs" />
+    <Compile Include="Rules\Actions\DelayRuleAction.cs" />
     <Compile Include="Rules\Actions\LightRuleAction.cs" />
     <Compile Include="Rules\Actions\RuleActionType.cs" />
     <Compile Include="Rules\Actions\SonosActionType.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Rules\Actions\TemperatureRuleAction.cs" />
     <Compile Include="Rules\BaseRuleDefinition.cs" />
     <Compile Include="Rules\DayRule.cs" />
+    <Compile Include="Rules\DelayedAction.cs" />
     <Compile Include="Rules\IActionable.cs" />
     <Compile Include="Rules\IRuleDefinition.cs" />
     <Compile Include="Rules\LightRule.cs" />

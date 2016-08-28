@@ -42,6 +42,9 @@ namespace Automato.Job
             var homeStateLogger = new HomeStateLogger();
             homeStateLogger.Start();
 
+            var delayedActionRunner = new DelayedActionRunner();
+            delayedActionRunner.Start();
+
             Console.ReadKey(true);
         }
     }

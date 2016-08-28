@@ -14,12 +14,19 @@ namespace Automato.Logic.Rules.Actions
     /// <typeparam name="T"></typeparam>
     public abstract class BaseRuleActionRunner<T> : IRuleActionRunner<T>, IRuleActionRunner where T : class, IRuleAction
     {
-        public abstract Task ExecuteActionAsync(T action);
+        protected abstract Task ExecuteActionAsync(T action);
         protected static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        async Task IRuleActionRunner.ExecuteActionAsync(IRuleAction action)
+        async Task<IEnumerable<BaseRuleAction>> IRuleActionRunner.ExecuteActionAsync(IRuleAction action, IEnumerable<BaseRuleAction> nextActions)
         {
-            await ExecuteActionAsync(action as T);
+            return await ExecuteActionAsync(action as T, nextActions);
+        }
+
+        public virtual async Task<IEnumerable<BaseRuleAction>> ExecuteActionAsync(T action, IEnumerable<BaseRuleAction> nextActions)
+        {
+            await ExecuteActionAsync(action);
+
+            return nextActions;
         }
     }
 }

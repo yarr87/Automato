@@ -13,7 +13,7 @@ namespace Automato.Logic.Rules.Actions
     /// </summary>
     public class LightRuleActionRunner : BaseRuleActionRunner<LightRuleAction>
     {
-        public override async Task ExecuteActionAsync(LightRuleAction action)
+        protected override async Task ExecuteActionAsync(LightRuleAction action)
         {
             await new OpenHabRestService().SendCommand(action.DeviceState.InternalName, action.DeviceState.State);
         }

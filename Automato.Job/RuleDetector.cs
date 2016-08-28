@@ -36,6 +36,10 @@ namespace Automato.Job
 
             timeSpan = TimeSpan.FromSeconds(Int32.Parse(ConfigurationManager.AppSettings["RuleCheckFrequencyInSeconds"]));
 
+            // TODO: start the timer at the next 5-minute increment so it runs at 6, 6:05, etc instead of 6:02, 6:07, etc
+
+            //var currentMinute = DateTime.Now.Minute;
+
             _timer = new Timer(new TimerCallback(DoWork), null, TimeSpan.Zero, timeSpan);
         }
 

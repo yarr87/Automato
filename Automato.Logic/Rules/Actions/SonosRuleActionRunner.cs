@@ -13,7 +13,7 @@ namespace Automato.Logic.Rules.Actions
     /// </summary>
     public class SonosRuleActionRunner : BaseRuleActionRunner<SonosRuleAction>
     {
-        public override async Task ExecuteActionAsync(SonosRuleAction action)
+        protected override async Task ExecuteActionAsync(SonosRuleAction action)
         {
             if (action.CommandType == SonosActionType.Favorite)
             {

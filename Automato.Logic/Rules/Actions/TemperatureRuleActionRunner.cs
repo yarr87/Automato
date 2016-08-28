@@ -13,7 +13,7 @@ namespace Automato.Logic.Rules.Actions
     /// </summary>
     public class TemperatureRuleActionRunner : BaseRuleActionRunner<TemperatureRuleAction>
     {
-        public override async Task ExecuteActionAsync(TemperatureRuleAction action)
+        protected override async Task ExecuteActionAsync(TemperatureRuleAction action)
         {
             await new TemperatureHandler().SetTemperature(action.ThermostatId, action.Temperature);
         }
