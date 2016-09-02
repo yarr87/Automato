@@ -41,11 +41,20 @@ namespace Automato.Model.Rules.Actions
                 {
                     return new SonosRuleAction();
                 }
+                else if (ruleAction == "Delay")
+                {
+                    return new DelayRuleAction();
+                }
                 else
                 {
                     throw new Exception("Unrecognized rule action " + ruleAction);
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("BaseRuleAction with type {0}", ActionType);
         }
     }
 }

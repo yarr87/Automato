@@ -5,6 +5,7 @@ using Automato.Model.Extensions;
 using Automato.Model.HomeStates;
 using Automato.Model.Messages;
 using Automato.Model.Rules;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace Automato.Logic.Rules
         RulesProcessorEngine _rulesEngine = new RulesProcessorEngine();
         RuleRunner _ruleRunner = new RuleRunner();
 
+        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// When a device state is updated, trigger any appropriate rules
         /// </summary>
@@ -29,6 +32,8 @@ namespace Automato.Logic.Rules
         /// <returns></returns>
         public async Task ProcessDeviceStateUpdates(IEnumerable<DeviceState> deviceStates)
         {
+            Logger.DebugFormat("Processing device state updates: {0}", deviceStates);
+
             var homeState = await _homeStateManager.GetCurrentHomeState();
             var rules = new RuleStore().GetActive();
 
@@ -44,6 +49,7 @@ namespace Automato.Logic.Rules
                 {
                     if (_rulesEngine.IsRuleActive(matchingRule, updatedState.Value))
                     {
+                        Logger.DebugFormat("Found matching rule {0}", matchingRule.Name);
                         await _ruleRunner.RunRule(matchingRule);
                     }
                 }

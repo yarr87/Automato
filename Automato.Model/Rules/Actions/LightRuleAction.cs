@@ -17,5 +17,10 @@ namespace Automato.Model.Rules.Actions
         }
 
         public DeviceState DeviceState { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("LightRuleAction with DeviceState = {0} {1}", DeviceState.InternalName, DeviceState.State);
+        }
     }
 }

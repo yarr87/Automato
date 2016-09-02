@@ -2,6 +2,7 @@
 using Automato.Logic.Rules.Actions;
 using Automato.Model.Rules;
 using Automato.Model.Rules.Actions;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,15 @@ namespace Automato.Logic.Rules
             { RuleActionType.Light, new LightRuleActionRunner() },
             { RuleActionType.EmailAsText, new EmailAsTextRuleActionRunner() },
             { RuleActionType.Temperature, new TemperatureRuleActionRunner() },
-            { RuleActionType.Sonos, new SonosRuleActionRunner() }
+            { RuleActionType.Sonos, new SonosRuleActionRunner() },
+            { RuleActionType.Delay, new DelayRuleActionRunner() }
         };
+
+        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public async Task RunRule(IActionable actionable)
         {
+            Logger.DebugFormat("Running rule with actions {0}", actionable.Actions);
             var actions = actionable.Actions;
 
             while (actions.Any())

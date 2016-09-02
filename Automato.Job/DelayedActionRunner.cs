@@ -55,14 +55,14 @@ namespace Automato.Job
 
                     var delayedAction = store.GetById(value.Id);
 
-                    if (delayedAction.StartTime >= DateTime.Now)
+                    if (delayedAction.StartTime <= DateTime.Now)
                     {
                         Logger.DebugFormat("Executing action {0} immediately", value.Id);
                         ProcessDelayedAction(delayedAction);
                     }
                     else
                     {
-                        var timeSpan = DateTime.Now - delayedAction.StartTime;
+                        var timeSpan = delayedAction.StartTime - DateTime.Now;
 
                         Logger.DebugFormat("Queuing action {0} to execute in {1}", value.Id, timeSpan);
 
@@ -77,6 +77,7 @@ namespace Automato.Job
 
             private void ProcessDelayedAction(object state)
             {
+                Logger.Debug("Timer fired, running delayed action");
                 ProcessDelayedActionAsync(state as DelayedAction).Wait();
             }
 
