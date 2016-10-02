@@ -31,8 +31,15 @@ namespace Automato.Logic
                 // NOTE: originally this did heat then cool, and it would update heat but not cool.  Worked fine downstairs.  Switching them
                 // fixed it.  However, I'm not sure if that was because downstairs was in heat/off mode and upstairs was in cool.  Will have to
                 // see if next winter it breaks heat set point when in heat mode.
-                await openhab.SendCommand(thermostat.CoolSetPoint.InternalName, temperature);
+
+                // 10/2: this worked all summer in A/C mode, but when I switched upstairs to heat it stopped working.  I'm guessing it can't handle getting
+                // two commands in a row so close together.  Solution would be (1) add a delay between them, or (2) include heat/cool type in the request.  For
+                // now just switching them back so heat will work.
+                // Would need to add a heat/cool switch
+                // 1) On the main thermostat UI
+                // 2) In the TemperatureRuleAction object, and the associated rule action in the frontend.
                 await openhab.SendCommand(thermostat.HeatSetPoint.InternalName, temperature);
+                await openhab.SendCommand(thermostat.CoolSetPoint.InternalName, temperature);
             }
             else
             {

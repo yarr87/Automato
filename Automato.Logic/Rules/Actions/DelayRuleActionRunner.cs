@@ -22,16 +22,6 @@ namespace Automato.Logic.Rules.Actions
 
             Logger.DebugFormat("Scheduling next action to run at {0}", startTime);
 
-            // TODO: this works fine with the hardcoded list below, but passing one in that's the same thing fails with a serialization error...
-
-            IEnumerable<BaseRuleAction> actions = new List<BaseRuleAction>() 
-            {
-                new LightRuleAction() { DeviceState = new Model.DeviceState() { InternalName = "Z_switch_kitchen_island", State = "ON" } }
-            };
-
-            Logger.DebugFormat("Saving actions {1} {0}", string.Join(", ", nextActions.Select(a => a.ToString())), nextActions.ToList());
-            Logger.DebugFormat("Saving actions {1} {0}", string.Join(", ", actions.Select(a => a.ToString())), actions);
-
             try
             {
                 // A listener in Automato.Job will react to this and start a timer
