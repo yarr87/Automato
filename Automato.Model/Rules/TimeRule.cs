@@ -33,6 +33,18 @@ namespace Automato.Model.Rules
         /// </summary>
         public TimeSpan End { get; set; }
 
+        /// <summary>
+        /// Flag to indicate start time is dynamic (sunrise or sunset).  Put in a separate field so I don't have to worry
+        /// about migrating existing rules.
+        /// </summary>
+        public SpecialTimeType SpecialStart { get; set; }
+
+        /// <summary>
+        /// Flag to indicate start time is dynamic (sunrise or sunset).  Put in a separate field so I don't have to worry
+        /// about migrating existing rules.
+        /// </summary>
+        public SpecialTimeType SpecialEnd { get; set; }
+
         // TODO: handle these cases
         // Mondays, after 6pm
         // Weekends between 10 and 2

@@ -97,6 +97,7 @@
     <Compile Include="Rules\LightRule.cs" />
     <Compile Include="Rules\Rule.cs" />
     <Compile Include="Rules\RuleType.cs" />
+    <Compile Include="Rules\SpecialTimeType.cs" />
     <Compile Include="Rules\TimeRule.cs" />
     <Compile Include="Rules\TimeRuleType.cs" />
     <Compile Include="Rules\UserRule.cs" />

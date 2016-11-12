@@ -47,7 +47,7 @@ namespace Automato.Logic.Rules
                         
                 foreach(var matchingRule in matchingRules)
                 {
-                    if (_rulesEngine.IsRuleActive(matchingRule, updatedState.Value))
+                    if (await _rulesEngine.IsRuleActive(matchingRule, updatedState.Value))
                     {
                         Logger.DebugFormat("Found matching rule {0}", matchingRule.Name);
                         await _ruleRunner.RunRule(matchingRule);
@@ -85,7 +85,7 @@ namespace Automato.Logic.Rules
 
                 foreach (var matchingRule in matchingRules)
                 {
-                    if (_rulesEngine.IsRuleActive(matchingRule, updatedState.Value))
+                    if (await _rulesEngine.IsRuleActive(matchingRule, updatedState.Value))
                     {
                         await _ruleRunner.RunRule(matchingRule);
                     }

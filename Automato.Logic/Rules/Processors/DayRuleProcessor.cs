@@ -13,9 +13,9 @@ namespace Automato.Logic.Rules.Processors
     /// </summary>
     public class DayRuleProcessor : BaseRuleProcessor<DayRule>
     {
-        public override bool IsRuleActive(DayRule rule, HomeState state)
+        public override Task<bool> IsRuleActive(DayRule rule, HomeState state)
         {
-            return rule.Days.Contains(state.Time.DayOfWeek);
+            return Task.FromResult(rule.Days.Contains(state.Time.DayOfWeek));
         }
     }
 }

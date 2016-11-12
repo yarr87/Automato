@@ -62,7 +62,7 @@ namespace Automato.Job
                     // Only include rules without triggers.  Those rules will be run when that triggered action happens.
                     // Ex: we don't want to run "When Jeff comes home after 6pm" here.  We do want to run "When Jeff is home after 6pm"
                     var nonTriggeredRules = rules.Where(r => !r.RuleDefinitions.Any(d => d.IsTriggered)).ToList();
-                    var activeRules = new RulesProcessorEngine().GetNewlyActiveRules(nonTriggeredRules, _previousHomeState, currentHomeState);
+                    var activeRules = await new RulesProcessorEngine().GetNewlyActiveRules(nonTriggeredRules, _previousHomeState, currentHomeState);
 
                     await RunActiveRules(activeRules);
                 }

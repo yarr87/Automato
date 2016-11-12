@@ -13,11 +13,13 @@ namespace Automato.Logic.Rules.Processors
     /// </summary>
     public class LightRuleProcessor : BaseRuleProcessor<LightRule>
     {
-        public override bool IsRuleActive(LightRule rule, HomeState state)
+        public override Task<bool> IsRuleActive(LightRule rule, HomeState state)
         {
             var light = state.Lights.FirstOrDefault(l => l.InternalName == rule.LightState.InternalName);
 
-            return light != null && NormalizeState(light.State) == NormalizeState(rule.LightState.State);
+            bool isActive = light != null && NormalizeState(light.State) == NormalizeState(rule.LightState.State);
+
+            return Task.FromResult(isActive);
         }
 
         private string NormalizeState(string state)

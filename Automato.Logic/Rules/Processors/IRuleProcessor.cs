@@ -12,11 +12,11 @@ namespace Automato.Logic.Rules.Processors
 
     public interface IRuleProcessor
     {
-        bool IsRuleActive(IRuleDefinition rule, HomeState state);
+        Task<bool> IsRuleActive(IRuleDefinition rule, HomeState state);
     }
 
     public interface IRuleProcessor<T> where T : IRuleDefinition
     {
-        bool IsRuleActive(T rule, HomeState state);
+        Task<bool> IsRuleActive(T rule, HomeState state);
     }
 }

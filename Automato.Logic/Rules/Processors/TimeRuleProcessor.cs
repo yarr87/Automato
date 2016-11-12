@@ -1,4 +1,5 @@
-﻿using Automato.Model.HomeStates;
+﻿using Automato.Integration;
+using Automato.Model.HomeStates;
 using Automato.Model.Rules;
 using System;
 using System.Collections.Generic;
@@ -14,41 +15,67 @@ namespace Automato.Logic.Rules.Processors
     /// </summary>
     public class TimeRuleProcessor : BaseRuleProcessor<TimeRule>
     {
-        public override bool IsRuleActive(TimeRule rule, HomeState state)
+        private async Task<TimeSpan> GetTime(TimeSpan time, SpecialTimeType special)
+        {
+            // TODO: might be better to just have some external process update the sunrise/sunset times automatically each day.
+            // If this api call is slow it could slow down all rule processing...
+            if (special == SpecialTimeType.Sunrise)
+            {
+                var sunrise = await new SunriseSunsetService().GetSunriseToday();
+                return sunrise.GetValueOrDefault().TimeOfDay;
+            }
+            else if (special == SpecialTimeType.Sunset)
+            {
+                var sunset = await new SunriseSunsetService().GetSunsetToday();
+                return sunset.GetValueOrDefault().TimeOfDay;
+            }
+            else
+            {
+                return time;
+            }
+        }
+        public override async Task<bool> IsRuleActive(TimeRule rule, HomeState state)
         {
             var currentTime = state.Time.TimeOfDay;
+            // Use time from rule, or dynamic sunrise/sunset for current day
+            var start = await GetTime(rule.Start, rule.SpecialStart);
+            var end = await GetTime(rule.End, rule.SpecialEnd);
+
+            bool isActive;
 
             // Point in time rule
             if (rule.TimeRuleType == TimeRuleType.PointInTime)
             {
                 // We need to have a window of time so a point in time doesn't trigger much later.  For example a rule is "at 6pm if Jeff is home, turn on a light", but
                 // I get home at 8pm.  It shouldn't trigger that rule.  The 5 minutes should be less than or equal to the frequency we run the rules via job.
-                var endOfWindow = rule.Start.Add(TimeSpan.FromMinutes(5));
+                var endOfWindow = start.Add(TimeSpan.FromMinutes(5));
 
-                return rule.Start <= currentTime && endOfWindow >= currentTime;
+                isActive = start <= currentTime && endOfWindow >= currentTime;
             }
             // Range rule
             else if (rule.TimeRuleType == TimeRuleType.After)
             {
-                return rule.Start < currentTime;
+                isActive = start < currentTime;
             }
             else if (rule.TimeRuleType == TimeRuleType.Before)
             {
-                return rule.End > currentTime;
+                isActive = end > currentTime;
             }
             else // Between
             {
                 // Single-day range
-                if (rule.Start < rule.End)
+                if (start < end)
                 {
-                    return rule.Start <= currentTime && rule.End >= currentTime;
+                    isActive = start <= currentTime && end >= currentTime;
                 }
                 // Day-spanning range
                 else
                 {
-                    return rule.Start <= currentTime || rule.End >= currentTime;
+                    isActive = start <= currentTime || end >= currentTime;
                 }
             }
+
+            return isActive;
         }
     }
 }

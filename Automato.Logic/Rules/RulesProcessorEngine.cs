@@ -29,9 +29,21 @@ namespace Automato.Logic.Rules
         /// <param name="previousState"></param>
         /// <param name="currentState"></param>
         /// <returns></returns>
-        public IEnumerable<Rule> GetNewlyActiveRules(List<Rule> rules, HomeState previousState, HomeState currentState)
+        public async Task<IEnumerable<Rule>> GetNewlyActiveRules(List<Rule> rules, HomeState previousState, HomeState currentState)
         {
-            return rules.Where(r => DidRuleChangeToActive(r, previousState, currentState));
+            var activeRules = new List<Rule>();
+
+            foreach (var rule in rules)
+            {
+                if (await DidRuleChangeToActive(rule, previousState, currentState))
+                {
+                    activeRules.Add(rule);
+                }
+            }
+
+            return activeRules;
+
+            //return await rules.Where(async r => await DidRuleChangeToActive(r, previousState, currentState));
         }
 
         /// <summary>
@@ -40,9 +52,17 @@ namespace Automato.Logic.Rules
         /// <param name="rule"></param>
         /// <param name="currentState"></param>
         /// <returns></returns>
-        public bool IsRuleActive(Rule rule, HomeState currentState)
+        public async Task<bool> IsRuleActive(Rule rule, HomeState currentState)
         {
-            return rule.RuleDefinitions.All(d => IsRuleDefinitionActive(d, currentState));
+            // Not sure how to do this with await and linq, so just looping
+            var isCurrentActive = true;
+
+            foreach (var ruleDef in rule.RuleDefinitions)
+            {
+                isCurrentActive &= await IsRuleDefinitionActive(ruleDef, currentState);
+            }
+
+            return isCurrentActive;
         }
 
         /// <summary>
@@ -52,15 +72,16 @@ namespace Automato.Logic.Rules
         /// <param name="previousState"></param>
         /// <param name="currentState"></param>
         /// <returns></returns>
-        public bool DidRuleChangeToActive(Rule rule, HomeState previousState, HomeState currentState)
+        public async Task<bool> DidRuleChangeToActive(Rule rule, HomeState previousState, HomeState currentState)
         {
+            return await IsRuleActive(rule, currentState) && !await IsRuleActive(rule, previousState);
             // Check if it's fully active with the current state and wasn't on the previous state
-            return rule.RuleDefinitions.All(d => IsRuleDefinitionActive(d, currentState)) && !rule.RuleDefinitions.All(d => IsRuleDefinitionActive(d, previousState));
+            //return rule.RuleDefinitions.All(d => IsRuleDefinitionActive(d, currentState).Result) && !rule.RuleDefinitions.All(async d => await IsRuleDefinitionActive(d, previousState));
         }
 
-        private bool IsRuleDefinitionActive(BaseRuleDefinition ruleDefinition, HomeState state)
+        private async Task<bool> IsRuleDefinitionActive(BaseRuleDefinition ruleDefinition, HomeState state)
         {
-            return _ruleProcessors[ruleDefinition.RuleType].IsRuleActive(ruleDefinition, state);
+            return await _ruleProcessors[ruleDefinition.RuleType].IsRuleActive(ruleDefinition, state);
         }
     }
 }

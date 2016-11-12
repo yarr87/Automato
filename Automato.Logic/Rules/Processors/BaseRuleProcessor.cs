@@ -14,11 +14,11 @@ namespace Automato.Logic.Rules.Processors
     /// <typeparam name="T"></typeparam>
     public abstract class BaseRuleProcessor<T> : IRuleProcessor<T>, IRuleProcessor where T : class, IRuleDefinition
     {
-        public abstract bool IsRuleActive(T rule, HomeState state);
+        public abstract Task<bool> IsRuleActive(T rule, HomeState state);
 
-        bool IRuleProcessor.IsRuleActive(IRuleDefinition rule, HomeState state)
+        async Task<bool> IRuleProcessor.IsRuleActive(IRuleDefinition rule, HomeState state)
         {
-            return IsRuleActive(rule as T, state);
+            return await IsRuleActive(rule as T, state);
         }
     }
 }
