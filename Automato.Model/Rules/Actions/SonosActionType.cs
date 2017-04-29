@@ -16,6 +16,11 @@ namespace Automato.Model.Rules.Actions
         /// <summary>
         /// Play a sonos playlist
         /// </summary>
-        Playlist
+        Playlist,
+
+        /// <summary>
+        /// Pause current track
+        /// </summary>
+        Pause
     }
 }

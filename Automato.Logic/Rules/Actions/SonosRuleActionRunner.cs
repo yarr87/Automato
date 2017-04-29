@@ -19,6 +19,9 @@ namespace Automato.Logic.Rules.Actions
             {
                 await new SonosHttpService().PlayFavorite(action.Name, action.Parameter);
             }
+            else if (action.CommandType == SonosActionType.Pause) {
+                await new SonosHttpService().Pause(action.Name);
+            }
             else
             {
                 Logger.ErrorFormat("Unknown sonos command type {0}", action.CommandType);
