@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Automato.Logic
@@ -32,14 +33,17 @@ namespace Automato.Logic
                 // fixed it.  However, I'm not sure if that was because downstairs was in heat/off mode and upstairs was in cool.  Will have to
                 // see if next winter it breaks heat set point when in heat mode.
 
-                // 10/2: this worked all summer in A/C mode, but when I switched upstairs to heat it stopped working.  I'm guessing it can't handle getting
+                // 10/2/16: this worked all summer in A/C mode, but when I switched upstairs to heat it stopped working.  I'm guessing it can't handle getting
                 // two commands in a row so close together.  Solution would be (1) add a delay between them, or (2) include heat/cool type in the request.  For
                 // now just switching them back so heat will work.
                 // Would need to add a heat/cool switch
                 // 1) On the main thermostat UI
                 // 2) In the TemperatureRuleAction object, and the associated rule action in the frontend.
-                await openhab.SendCommand(thermostat.HeatSetPoint.InternalName, temperature);
+                // 5/22/17: same thing when switching back to A/C.  Taking the easy way for now (move cool before heat), still need a long-term fix.
+                // HACK: Also adding a sleep to see if that works.
                 await openhab.SendCommand(thermostat.CoolSetPoint.InternalName, temperature);
+                Thread.Sleep(1000);
+                await openhab.SendCommand(thermostat.HeatSetPoint.InternalName, temperature);
             }
             else
             {
